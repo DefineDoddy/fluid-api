@@ -14,3 +14,5 @@ A Spigot API designed to make plugin development a breeze
 	<version>VERSION</version>
 </dependency>
 ```
+
+Please note: this API is in heavy development and is likely to go through huge changes, possibly breaking project imports
