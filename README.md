@@ -11,6 +11,6 @@ A Spigot API designed to make plugin development a breeze
 <dependency>
 	<groupId>com.github.DefineDoddy</groupId>
 	<artifactId>fluid-api</artifactId>
-	<version>pre-0.1.0</version>
+	<version>VERSION</version>
 </dependency>
 ```
