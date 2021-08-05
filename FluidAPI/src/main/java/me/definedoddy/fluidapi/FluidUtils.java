@@ -1,4 +1,4 @@
-package com.github.definedoddy.fluidapi;
+package me.definedoddy.fluidapi;
 
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;

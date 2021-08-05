@@ -1,4 +1,4 @@
-package com.github.definedoddy.fluidapi;
+package me.definedoddy.fluidapi;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;

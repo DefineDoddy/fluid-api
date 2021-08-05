@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.github.definedoddy</groupId>
+    <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>pre-0.2.1</version>
+    <version>pre-0.2.2</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

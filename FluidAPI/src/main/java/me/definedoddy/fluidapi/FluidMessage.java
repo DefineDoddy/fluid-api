@@ -1,4 +1,4 @@
-package com.github.definedoddy.fluidapi;
+package me.definedoddy.fluidapi;
 
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
