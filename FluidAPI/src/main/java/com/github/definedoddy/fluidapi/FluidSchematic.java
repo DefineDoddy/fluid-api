@@ -1,4 +1,4 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -22,12 +22,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Schematic {
+public class FluidSchematic {
     private String name;
     private final File file;
     private FileConfiguration config = new YamlConfiguration();
 
-    public Schematic(Block point1, Block point2, String name) {
+    public FluidSchematic(Block point1, Block point2, String name) {
         this.name = name;
         file = new File(FluidPlugin.getPlugin().getDataFolder() + "/schematics/" + name + ".yml");
 
@@ -46,7 +46,7 @@ public class Schematic {
                     Block block = point1.getWorld().getBlockAt(x, y, z);
                     blocks[x - minX][y - minY][z - minZ] = block;
                     if (block.getState() instanceof InventoryHolder holder) {
-                        if (Utils.getInventoryCount(holder.getInventory()) > 0) {
+                        if (FluidUtils.getInventoryCount(holder.getInventory()) > 0) {
                             inventories.add(holder.getInventory());
                         }
                     } else if (block.getState() instanceof CreatureSpawner spawner) {
@@ -88,14 +88,14 @@ public class Schematic {
         }
     }
 
-    private Schematic(String name) {
+    private FluidSchematic(String name) {
         this.name = name;
         file = new File(FluidPlugin.getPlugin().getDataFolder() + "/schematics/" + name + ".yml");
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 
-    public static Schematic get(String name) {
-        return new Schematic(name);
+    public static FluidSchematic get(String name) {
+        return new FluidSchematic(name);
     }
 
     public String getName() {
@@ -108,6 +108,15 @@ public class Schematic {
 
     public Configuration getConfig() {
         return config;
+    }
+
+    public void save(String name) {
+        try {
+            config.save(new File(FluidPlugin.getPlugin().getDataFolder() + "/schematics/" + name + ".yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        reload();
     }
 
     public void save() {

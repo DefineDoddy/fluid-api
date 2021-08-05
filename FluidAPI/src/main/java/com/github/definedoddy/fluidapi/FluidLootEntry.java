@@ -1,8 +1,8 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.inventory.ItemStack;
 
-public class LootTableEntry {
+public class FluidLootEntry {
     private final int weight;
     private final ItemStack item;
     private double chance;
@@ -10,7 +10,7 @@ public class LootTableEntry {
     private final int minCount;
     private final int maxCount;
 
-    public LootTableEntry(ItemStack item, int weight, double vanishChance, int minCount, int maxCount) {
+    public FluidLootEntry(ItemStack item, int weight, double vanishChance, int minCount, int maxCount) {
         this.item = item.clone();
         this.weight = weight;
         this.vanishChance = vanishChance;

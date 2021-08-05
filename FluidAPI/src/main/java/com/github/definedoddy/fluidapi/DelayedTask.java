@@ -1,4 +1,4 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.Bukkit;
 

@@ -1,11 +1,11 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.Bukkit;
 
-public abstract class RepeatingCountTask {
+public abstract class CountingTask {
     private final int taskId;
 
-    public RepeatingCountTask(long initialDelay, long repeatingDelay, int count) {
+    public CountingTask(long initialDelay, long repeatingDelay, int count) {
         taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(FluidPlugin.getPlugin(), new Runnable() {
             int loop = 0;
             @Override

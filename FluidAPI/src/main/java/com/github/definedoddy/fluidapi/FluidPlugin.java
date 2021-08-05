@@ -1,4 +1,4 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.plugin.Plugin;
 
@@ -16,7 +16,7 @@ public class FluidPlugin {
         FluidPlugin.plugin = plugin;
         FluidPlugin.name = name;
         FluidPlugin.chatPrefix = chatPrefix;
-        Console.logRaw("&b[FluidAPI] &aSuccessfully registered " + name);
+        new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name).send();
     }
 
     public static Plugin getPlugin() {

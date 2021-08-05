@@ -1,4 +1,4 @@
-package io.github.definedoddy.fluidapi;
+package com.github.definedoddy.fluidapi;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -10,23 +10,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class Group {
-
-    //global
-
-    public static List<Group> getGroups() {
+public class FluidGroup {
+    public static List<FluidGroup> getGroups() {
         return groups;
     }
 
-    private static final List<Group> groups = new ArrayList<>();
+    private static final List<FluidGroup> groups = new ArrayList<>();
 
     public static ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
     }
 
     private static final ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
-
-    //local
 
     public Team getTeam() {
         return team;
@@ -39,8 +34,6 @@ public class Group {
     }
 
     private final Scoreboard scoreboard;
-
-    //methods
 
     public void allowFriendlyFire() {
         this.team.allowFriendlyFire();
@@ -94,9 +87,7 @@ public class Group {
         return this.getPlayers().contains(player);
     }
 
-    //constructors
-
-    public Group(String name, List<Player> players) {
+    public FluidGroup(String name, List<Player> players) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
         for (Player player : players) {
@@ -104,7 +95,7 @@ public class Group {
         }
     }
 
-    public Group(String name, Collection<? extends Player> players) {
+    public FluidGroup(String name, Collection<? extends Player> players) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
         for (Player player : players) {
@@ -112,7 +103,7 @@ public class Group {
         }
     }
 
-    public Group(String name) {
+    public FluidGroup(String name) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
     }
@@ -123,8 +114,6 @@ public class Group {
         TEAM_ONLY,
         OTHER_TEAMS_ONLY
     }
-
-    //util
 
     private Team.OptionStatus convertStatus(OptionStatus status) {
         return switch (status) {

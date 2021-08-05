@@ -4,19 +4,51 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e927c6fa-0241-410a-ae36-bbd198822542" name="Default Changelist" comment="">
+    <list default="true" id="e927c6fa-0241-410a-ae36-bbd198822542" name="Default Changelist" comment="more changes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Configs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Console.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/CustomLootTable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidLoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/DelayedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/DelayedTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Entities.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/FluidPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidGroup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/ItemGlow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Items.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/LootTableEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidLootEntry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Recipes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/RepeatingCountTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/CountingTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/RepeatingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/RepeatingTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Schematic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidSchematic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/github/definedoddy/fluidapi/FluidUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="KotlinCodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
   <component name="ProjectId" id="1wEGylD0yM4LciBhlcimWCkJPgj" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
@@ -25,7 +57,10 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="extract.method.default.visibility" value="private" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
+    <property name="typescript.add.unambiguous.imports.on.the.fly" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -33,13 +68,15 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -53,11 +90,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1628016592379</updated>
-      <workItem from="1628016593718" duration="2281000" />
+      <workItem from="1628016593718" duration="6684000" />
+      <workItem from="1628104837196" duration="7965000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
