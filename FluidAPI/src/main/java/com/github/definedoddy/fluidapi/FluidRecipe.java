@@ -3,35 +3,36 @@ package com.github.definedoddy.fluidapi;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
-import org.bukkit.inventory.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FluidRecipe {
-    private Recipe recipe;
-
-    public FluidRecipe(String key, ItemStack result, Material[] ingredients) {
+    public static ShapelessRecipe createShapeless(String key, ItemStack result, List<Material> ingredients) {
         NamespacedKey namespacedKey = new NamespacedKey(FluidPlugin.getPlugin(), key);
         ShapelessRecipe recipe = new ShapelessRecipe(namespacedKey, result);
         for (Material ingredient : ingredients) {
             recipe.addIngredient(ingredient);
         }
         Bukkit.addRecipe(recipe);
-        this.recipe = recipe;
+        return recipe;
     }
 
-    public FluidRecipe(String key, ItemStack result, ItemStack[] ingredients) {
+    public static ShapelessRecipe createShapelessExact(String key, ItemStack result, List<ItemStack> ingredients) {
         NamespacedKey namespacedKey = new NamespacedKey(FluidPlugin.getPlugin(), key);
         ShapelessRecipe recipe = new ShapelessRecipe(namespacedKey, result);
         for (ItemStack ingredient : ingredients) {
             recipe.addIngredient(new RecipeChoice.ExactChoice(ingredient));
         }
         Bukkit.addRecipe(recipe);
-        this.recipe = recipe;
+        return recipe;
     }
 
-    public FluidRecipe(String key, ItemStack result, Map<Character, Material> map, String... shape) {
+    public static ShapedRecipe createShaped(String key, ItemStack result, Map<Character, Material> map, String... shape) {
         NamespacedKey namespacedKey = new NamespacedKey(FluidPlugin.getPlugin(), key);
         ShapedRecipe recipe = new ShapedRecipe(namespacedKey, result);
         recipe.shape(shape);
@@ -39,10 +40,10 @@ public class FluidRecipe {
             recipe.setIngredient(character, map.get(character));
         }
         Bukkit.addRecipe(recipe);
-        this.recipe = recipe;
+        return recipe;
     }
 
-    public FluidRecipe(String key, ItemStack result, HashMap<Character, ItemStack> map, String... shape) {
+    public static ShapedRecipe createShapedExact(String key, ItemStack result, Map<Character, ItemStack> map, String... shape) {
         NamespacedKey namespacedKey = new NamespacedKey(FluidPlugin.getPlugin(), key);
         ShapedRecipe recipe = new ShapedRecipe(namespacedKey, result);
         recipe.shape(shape);
@@ -50,10 +51,6 @@ public class FluidRecipe {
             recipe.setIngredient(character, new RecipeChoice.ExactChoice(map.get(character)));
         }
         Bukkit.addRecipe(recipe);
-        this.recipe = recipe;
-    }
-
-    public Recipe build() {
         return recipe;
     }
 }
