@@ -7,12 +7,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FluidMessage {
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private List<Player> players;
+    private final List<Player> players = new ArrayList<>();
     private String message;
     private Type type = Type.CHAT;
     private boolean usePrefix;
