@@ -6,8 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="e927c6fa-0241-410a-ae36-bbd198822542" name="Default Changelist" comment="more changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +69,15 @@
       <workItem from="1628104837196" duration="10185000" />
       <workItem from="1628165595322" duration="160000" />
       <workItem from="1628165858929" duration="2357000" />
+<<<<<<< Updated upstream
       <workItem from="1628174729686" duration="868000" />
+=======
+      <workItem from="1628174729686" duration="1157000" />
+      <workItem from="1628178812162" duration="12509000" />
+      <workItem from="1628274751884" duration="1333000" />
+      <workItem from="1628276602708" duration="377000" />
+      <workItem from="1628277005914" duration="3262000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
