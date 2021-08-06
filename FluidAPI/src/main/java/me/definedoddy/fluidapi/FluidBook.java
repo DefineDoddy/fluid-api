@@ -3,6 +3,7 @@ package me.definedoddy.fluidapi;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.Map;
@@ -16,8 +17,19 @@ public class FluidBook {
 
     public FluidBook(Enchantment enchantment, int level, boolean bypassLimit) {
         book = new ItemStack(Material.ENCHANTED_BOOK);
-        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
+        EnchantmentStorageMeta meta = (EnchantmentStorageMeta)book.getItemMeta();
         meta.addStoredEnchant(enchantment, level, bypassLimit);
+        book.setItemMeta(meta);
+    }
+
+    public FluidBook(String name, String author, String... text) {
+        book = new ItemStack(Material.WRITTEN_BOOK);
+        BookMeta meta = (BookMeta)book.getItemMeta();
+        meta.setTitle(name);
+        meta.setAuthor(author);
+        for (String line : text) {
+            meta.addPage(line);
+        }
         book.setItemMeta(meta);
     }
 

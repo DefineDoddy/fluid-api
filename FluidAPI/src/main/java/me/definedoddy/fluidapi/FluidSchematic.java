@@ -162,7 +162,7 @@ public class FluidSchematic {
                     if (animType == AnimType.LAYER || animType == AnimType.STEP) {
                         new DelayedTask((long) count * interval) {
                             @Override
-                            public void function() {
+                            public void run() {
                                 Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
                                 placeBlock(blockData, loc);
                             }
@@ -182,7 +182,7 @@ public class FluidSchematic {
         }
         new DelayedTask((long) maxHeight * interval) {
             @Override
-            public void function() {
+            public void run() {
                 ConfigurationSection spawners = config.getConfigurationSection("spawners");
                 if (spawners != null) {
                     for (String loc : spawners.getKeys(false)) {

@@ -32,8 +32,8 @@ public class FluidUtils {
 
     public static int getActionType(Action action) {
         if (action == Action.LEFT_CLICK_BLOCK || action == Action.LEFT_CLICK_AIR) return 0;
-        if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) return 1;
-        else return -1;
+        else if (action == Action.RIGHT_CLICK_BLOCK || action == Action.RIGHT_CLICK_AIR) return 1;
+        else return 2;
     }
 
     public static int getInventoryCount(Inventory inventory) {

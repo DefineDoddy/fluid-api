@@ -14,10 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FluidItem {
-    private final ItemStack item;
+    private ItemStack item;
 
     public FluidItem(Material material) {
-        item = new ItemStack(material);
+        new FluidItem(material, 1);
+    }
+
+    public FluidItem(Material material, int count) {
+        item = new ItemStack(material, count);
+    }
+
+    public FluidItem(ItemStack item) {
+        this.item = item;
     }
 
     public ItemStack build() {

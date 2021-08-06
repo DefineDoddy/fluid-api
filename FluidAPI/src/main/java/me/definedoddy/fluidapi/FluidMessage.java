@@ -8,6 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FluidMessage {
@@ -54,8 +55,35 @@ public class FluidMessage {
         return this;
     }
 
-    public FluidMessage addPlayers(List<Player> players) {
-        this.players.addAll(players);
+    public FluidMessage addPlayers(Player... players) {
+        this.players.addAll(Arrays.stream(players).toList());
+        return this;
+    }
+
+    public FluidMessage removePlayer(Player player) {
+        players.remove(player);
+        return this;
+    }
+
+    public FluidMessage addPlayer(String player) {
+        players.add(Bukkit.getPlayer(player));
+        return this;
+    }
+
+    public FluidMessage addPlayers(String... players) {
+        for (String player : players) {
+            this.players.add(Bukkit.getPlayer(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removePlayer(String player) {
+        players.remove(Bukkit.getPlayer(player));
+        return this;
+    }
+
+    public FluidMessage removePlayers() {
+        players.clear();
         return this;
     }
 
