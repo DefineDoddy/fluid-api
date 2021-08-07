@@ -6,7 +6,7 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>pre-0.2.9</version>
+    <version>pre-0.3.0</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

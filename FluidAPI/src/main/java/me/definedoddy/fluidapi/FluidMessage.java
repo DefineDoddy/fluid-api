@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public class FluidMessage {
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private final List<Player> players = new ArrayList<>();
+    private final List<Reciever> recievers = new ArrayList<>();
     private String message;
     private Type type = Type.CHAT;
     private boolean usePrefix;
@@ -26,12 +27,17 @@ public class FluidMessage {
 
     public FluidMessage(String message, Player... players) {
         this(message);
-        addPlayers(players);
+        addRecievers(players);
+    }
+
+    public FluidMessage(String message, CommandSender... senders) {
+        this(message);
+        addRecievers(senders);
     }
 
     public FluidMessage(String message, String... players) {
         this(message);
-        addPlayers(players);
+        addRecievers(players);
     }
 
     public FluidMessage send() {
@@ -39,14 +45,14 @@ public class FluidMessage {
         if (usePrefix) {
             message = prefix + this.message;
         }
-        if (players.size() > 0) {
-            for (Player player : players) {
+        if (recievers.size() > 0) {
+            for (Reciever reciever : recievers) {
                 if (type == Type.CHAT) {
-                    player.sendMessage(message);
+                    reciever.sendMessage(message);
                 } else if (type == Type.ACTIONBAR) {
-                    player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+                    reciever.sendBarMessage(message);
                 } else if (type == Type.TITLE) {
-                    player.sendTitle(message, "", 1, 3, 1);
+                    reciever.sendTitle(message, "", 1, 3, 1);
                 }
             }
         } else {
@@ -55,42 +61,43 @@ public class FluidMessage {
         return this;
     }
 
-    public FluidMessage addPlayer(Player player) {
-        players.add(player);
-        return this;
-    }
-
-    public FluidMessage addPlayer(String player) {
-        players.add(Bukkit.getPlayer(player));
-        return this;
-    }
-
-    public FluidMessage addPlayers(Player... players) {
-        this.players.addAll(Arrays.asList(players));
-        return this;
-    }
-
-    public FluidMessage addPlayers(String... players) {
-        for (String player : players) {
-            this.players.add(Bukkit.getPlayer(player));
+    public FluidMessage addRecievers(CommandSender... senders) {
+        for (CommandSender sender : senders) {
+            recievers.add(new Reciever(sender));
         }
         return this;
     }
 
-    public FluidMessage removePlayers(Player... players) {
-        this.players.removeAll(Arrays.asList(players));
-        return this;
-    }
-
-    public FluidMessage removePlayers(String... players) {
-        for (String player : players) {
-            this.players.remove(Bukkit.getPlayer(player));
+    public FluidMessage addRecievers(Player... players) {
+        for (Player player : players) {
+            recievers.add(new Reciever(player));
         }
         return this;
     }
 
-    public FluidMessage removePlayers() {
-        players.clear();
+    public FluidMessage addRecievers(String... players) {
+        for (String player : players) {
+            recievers.add(new Reciever(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removeRecievers(Player... players) {
+        for (Player player : players) {
+            recievers.remove(new Reciever(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removeRecievers(String... players) {
+        for (String player : players) {
+            recievers.remove(new Reciever(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removeRecievers() {
+        recievers.clear();
         return this;
     }
 
@@ -146,5 +153,54 @@ public class FluidMessage {
 
     public void runCmd(String command) {
         Bukkit.dispatchCommand(console, command);
+    }
+
+    private class Reciever {
+        private Player player;
+        private CommandSender sender;
+
+        public Reciever(Player player) {
+            this.player = player;
+        }
+
+        public Reciever(String player) {
+            this.player = Bukkit.getPlayer(player);
+        }
+
+        public Reciever(CommandSender sender) {
+            if (sender instanceof Player player) {
+                this.player = player;
+            } else {
+                this.sender = sender;
+            }
+        }
+
+        public Player getPlayer() {
+            return player;
+        }
+
+        public CommandSender getSender() {
+            return sender;
+        }
+
+        public void sendMessage(String message) {
+            if (player != null) {
+                player.sendMessage(message);
+            } else if (sender != null) {
+                sender.sendMessage(message);
+            }
+        }
+
+        public void sendBarMessage(String message) {
+            if (player != null) {
+                player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+            }
+        }
+
+        public void sendTitle(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+            if (player != null) {
+                player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ public abstract class CountingTask {
                 if (loop >= count) {
                     cancel();
                 }
-                function();
+                CountingTask.this.run();
             }
         }, initialDelay, repeatingDelay);
     }
@@ -23,5 +23,5 @@ public abstract class CountingTask {
         Bukkit.getScheduler().cancelTask(taskId);
     }
 
-    public abstract void function();
+    public abstract void run();
 }

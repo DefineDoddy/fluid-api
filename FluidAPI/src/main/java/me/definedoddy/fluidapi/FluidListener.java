@@ -19,17 +19,17 @@ public abstract class FluidListener<T extends Event> implements Listener {
             if (delay > 0) {
                 new DelayedTask(delay) {
                     @Override
-                    public void function() {
+                    public void run() {
                         run();
                     }
                 };
             } else {
-                run();
+                run(event);
             }
         }
     }
 
-    public abstract void run();
+    public abstract void run(T event);
 
     public void setActive(boolean active) {
         this.active = active;
