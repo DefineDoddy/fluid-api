@@ -8,6 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FluidMessage {
@@ -23,9 +24,14 @@ public class FluidMessage {
         this.message = toColor(message);
     }
 
-    public FluidMessage(String message, boolean usePrefix) {
-        new FluidMessage(message);
-        this.usePrefix = usePrefix;
+    public FluidMessage(String message, Player... players) {
+        this(message);
+        addPlayers(players);
+    }
+
+    public FluidMessage(String message, String... players) {
+        this(message);
+        addPlayers(players);
     }
 
     public FluidMessage send() {
@@ -54,8 +60,37 @@ public class FluidMessage {
         return this;
     }
 
-    public FluidMessage addPlayers(List<Player> players) {
-        this.players.addAll(players);
+    public FluidMessage addPlayer(String player) {
+        players.add(Bukkit.getPlayer(player));
+        return this;
+    }
+
+    public FluidMessage addPlayers(Player... players) {
+        this.players.addAll(Arrays.asList(players));
+        return this;
+    }
+
+    public FluidMessage addPlayers(String... players) {
+        for (String player : players) {
+            this.players.add(Bukkit.getPlayer(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removePlayers(Player... players) {
+        this.players.removeAll(Arrays.asList(players));
+        return this;
+    }
+
+    public FluidMessage removePlayers(String... players) {
+        for (String player : players) {
+            this.players.remove(Bukkit.getPlayer(player));
+        }
+        return this;
+    }
+
+    public FluidMessage removePlayers() {
+        players.clear();
         return this;
     }
 

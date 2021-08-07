@@ -20,6 +20,14 @@ public class FluidItem {
         item = new ItemStack(material);
     }
 
+    public FluidItem(Material material, int count) {
+        item = new ItemStack(material, count);
+    }
+
+    public FluidItem(ItemStack item) {
+        this.item = item;
+    }
+
     public ItemStack build() {
         return item;
     }
