@@ -5,15 +5,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataType;
 
 public class FluidEntity {
-    private Entity entity;
+    private final Entity entity;
 
     public FluidEntity(Entity entity) {
         this.entity = entity;
-    }
-
-    public FluidEntity setEntity(Entity entity) {
-        this.entity = entity;
-        return this;
     }
 
     public <T, Z> Z getData(String key, PersistentDataType<T, Z> type) {

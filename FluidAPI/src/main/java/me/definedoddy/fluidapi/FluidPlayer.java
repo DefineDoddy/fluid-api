@@ -3,15 +3,10 @@ package me.definedoddy.fluidapi;
 import org.bukkit.entity.Player;
 
 public class FluidPlayer {
-    private Player player;
+    private final Player player;
 
     public FluidPlayer(Player player) {
         this.player = player;
-    }
-
-    public FluidPlayer setPlayer(Player player) {
-        this.player = player;
-        return this;
     }
 
     public FluidPlayer runCmdAsOp(String command) {

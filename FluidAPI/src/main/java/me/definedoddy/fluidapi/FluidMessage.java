@@ -82,6 +82,24 @@ public class FluidMessage {
         return this;
     }
 
+    public FluidMessage setRecievers(CommandSender... senders) {
+        recievers.clear();
+        addRecievers(senders);
+        return this;
+    }
+
+    public FluidMessage setRecievers(Player... players) {
+        recievers.clear();
+        addRecievers(players);
+        return this;
+    }
+
+    public FluidMessage setRecievers(String... players) {
+        recievers.clear();
+        addRecievers(players);
+        return this;
+    }
+
     public FluidMessage removeRecievers(Player... players) {
         for (Player player : players) {
             recievers.remove(new Reciever(player));
