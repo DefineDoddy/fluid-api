@@ -1,12 +1,9 @@
 package me.definedoddy.fluidapi;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.EventExecutor;
-
-import java.lang.reflect.InvocationTargetException;
 
 public abstract class FluidListener<T extends Event> implements Listener, EventExecutor {
     private boolean active = true;
@@ -53,5 +50,16 @@ public abstract class FluidListener<T extends Event> implements Listener, EventE
     public FluidListener<T> setDelay(int delay) {
         this.delay = delay;
         return this;
+    }
+
+    public FluidListener<T> unregister() {
+        event.getHandlers().unregister(this);
+        return this;
+    }
+
+    public static class Group implements Listener {
+        public Group() {
+            FluidPlugin.getPlugin().getServer().getPluginManager().registerEvents(this, FluidPlugin.getPlugin());
+        }
     }
 }

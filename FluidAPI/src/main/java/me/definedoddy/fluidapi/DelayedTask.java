@@ -9,9 +9,13 @@ public abstract class DelayedTask {
         taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(FluidPlugin.getPlugin(), this::run, delay);
     }
 
+    public abstract void run();
+
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskId);
     }
 
-    public abstract void run();
+    public int getId() {
+        return taskId;
+    }
 }

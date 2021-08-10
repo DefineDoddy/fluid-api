@@ -19,9 +19,13 @@ public abstract class CountingTask {
         }, initialDelay, repeatingDelay);
     }
 
+    public abstract void run();
+
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskId);
     }
 
-    public abstract void run();
+    public int getId() {
+        return taskId;
+    }
 }

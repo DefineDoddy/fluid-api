@@ -9,13 +9,12 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FluidMessage {
     private final ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    private final List<Reciever> recievers = new ArrayList<>();
+    private final List<Receiver> receivers = new ArrayList<>();
     private String message;
     private Type type = Type.CHAT;
     private boolean usePrefix;
@@ -27,17 +26,17 @@ public class FluidMessage {
 
     public FluidMessage(String message, Player... players) {
         this(message);
-        addRecievers(players);
+        addReceivers(players);
     }
 
     public FluidMessage(String message, CommandSender... senders) {
         this(message);
-        addRecievers(senders);
+        addReceivers(senders);
     }
 
     public FluidMessage(String message, String... players) {
         this(message);
-        addRecievers(players);
+        addReceivers(players);
     }
 
     public FluidMessage send() {
@@ -45,14 +44,14 @@ public class FluidMessage {
         if (usePrefix) {
             message = prefix + this.message;
         }
-        if (recievers.size() > 0) {
-            for (Reciever reciever : recievers) {
+        if (receivers.size() > 0) {
+            for (Receiver receiver : receivers) {
                 if (type == Type.CHAT) {
-                    reciever.sendMessage(message);
+                    receiver.sendMessage(message);
                 } else if (type == Type.ACTIONBAR) {
-                    reciever.sendBarMessage(message);
+                    receiver.sendBarMessage(message);
                 } else if (type == Type.TITLE) {
-                    reciever.sendTitle(message, "", 1, 3, 1);
+                    receiver.sendTitle(message, "", 1, 3, 1);
                 }
             }
         } else {
@@ -61,61 +60,61 @@ public class FluidMessage {
         return this;
     }
 
-    public FluidMessage addRecievers(CommandSender... senders) {
+    public FluidMessage addReceivers(CommandSender... senders) {
         for (CommandSender sender : senders) {
-            recievers.add(new Reciever(sender));
+            receivers.add(new Receiver(sender));
         }
         return this;
     }
 
-    public FluidMessage addRecievers(Player... players) {
+    public FluidMessage addReceivers(Player... players) {
         for (Player player : players) {
-            recievers.add(new Reciever(player));
+            receivers.add(new Receiver(player));
         }
         return this;
     }
 
-    public FluidMessage addRecievers(String... players) {
+    public FluidMessage addReceivers(String... players) {
         for (String player : players) {
-            recievers.add(new Reciever(player));
+            receivers.add(new Receiver(player));
         }
         return this;
     }
 
-    public FluidMessage setRecievers(CommandSender... senders) {
-        recievers.clear();
-        addRecievers(senders);
+    public FluidMessage setReceivers(CommandSender... senders) {
+        receivers.clear();
+        addReceivers(senders);
         return this;
     }
 
-    public FluidMessage setRecievers(Player... players) {
-        recievers.clear();
-        addRecievers(players);
+    public FluidMessage setReceivers(Player... players) {
+        receivers.clear();
+        addReceivers(players);
         return this;
     }
 
-    public FluidMessage setRecievers(String... players) {
-        recievers.clear();
-        addRecievers(players);
+    public FluidMessage setReceivers(String... players) {
+        receivers.clear();
+        addReceivers(players);
         return this;
     }
 
-    public FluidMessage removeRecievers(Player... players) {
+    public FluidMessage removeReceivers(Player... players) {
         for (Player player : players) {
-            recievers.remove(new Reciever(player));
+            receivers.remove(new Receiver(player));
         }
         return this;
     }
 
-    public FluidMessage removeRecievers(String... players) {
+    public FluidMessage removeReceivers(String... players) {
         for (String player : players) {
-            recievers.remove(new Reciever(player));
+            receivers.remove(new Receiver(player));
         }
         return this;
     }
 
-    public FluidMessage removeRecievers() {
-        recievers.clear();
+    public FluidMessage removeReceivers() {
+        receivers.clear();
         return this;
     }
 
@@ -149,12 +148,12 @@ public class FluidMessage {
         return this;
     }
 
-    public static String toColor(Character character, String text) {
-        return ChatColor.translateAlternateColorCodes(character, text);
-    }
-
     public static String toColor(String text) {
         return toColor('&', text);
+    }
+
+    public static String toColor(Character character, String text) {
+        return ChatColor.translateAlternateColorCodes(character, text);
     }
 
     public void logInfo(String message) {
@@ -173,19 +172,19 @@ public class FluidMessage {
         Bukkit.dispatchCommand(console, command);
     }
 
-    private class Reciever {
+    private static class Receiver {
         private Player player;
         private CommandSender sender;
 
-        public Reciever(Player player) {
+        public Receiver(Player player) {
             this.player = player;
         }
 
-        public Reciever(String player) {
+        public Receiver(String player) {
             this.player = Bukkit.getPlayer(player);
         }
 
-        public Reciever(CommandSender sender) {
+        public Receiver(CommandSender sender) {
             if (sender instanceof Player player) {
                 this.player = player;
             } else {

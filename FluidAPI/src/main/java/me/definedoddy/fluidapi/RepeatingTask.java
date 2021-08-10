@@ -9,9 +9,13 @@ public abstract class RepeatingTask {
         taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(FluidPlugin.getPlugin(), this::run, initialDelay, repeatingDelay);
     }
 
+    public abstract void run();
+
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskId);
     }
 
-    public abstract void run();
+    public int getId() {
+        return taskId;
+    }
 }
