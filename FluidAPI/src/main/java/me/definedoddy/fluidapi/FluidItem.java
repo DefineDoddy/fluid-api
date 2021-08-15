@@ -77,6 +77,13 @@ public class FluidItem {
         return this;
     }
 
+    public FluidItem removeFlags() {
+        for (ItemFlag flag : item.getItemMeta().getItemFlags()) {
+            removeFlags(item, flag);
+        }
+        return this;
+    }
+
     public FluidItem setUnbreakable() {
         setUnbreakable(item, true);
         return this;
@@ -292,7 +299,7 @@ public class FluidItem {
         return item;
     }
 
-    public ItemStack addEnchantGlow(ItemStack item) {
+    public static ItemStack addEnchantGlow(ItemStack item) {
         return EnchantGlow.addToItem(item);
     }
 

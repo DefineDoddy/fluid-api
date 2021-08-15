@@ -41,4 +41,8 @@ public class FluidHead {
         FluidItem.setLore(head, lore);
         return this;
     }
+
+    public ItemStack build() {
+        return head;
+    }
 }

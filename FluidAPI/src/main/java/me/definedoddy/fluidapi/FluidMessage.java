@@ -118,6 +118,10 @@ public class FluidMessage {
         return this;
     }
 
+    public List<Receiver> getReceivers() {
+        return receivers;
+    }
+
     public FluidMessage setType(Type type) {
         this.type = type;
         return this;
@@ -132,6 +136,10 @@ public class FluidMessage {
     public FluidMessage setMessage(String message) {
         this.message = message;
         return this;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public FluidMessage usePrefix() {
