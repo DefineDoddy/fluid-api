@@ -24,13 +24,19 @@ public class FluidEntity {
         return hasData(entity, key, type);
     }
 
+    public FluidEntity removeData(String key) {
+        removeData(entity, key);
+        return this;
+    }
+
     public static <T, Z> Z getData(Entity entity, String key, PersistentDataType<T, Z> type) {
         return hasData(entity, key, type) ? entity.getPersistentDataContainer()
                 .get(new NamespacedKey(FluidPlugin.getPlugin(), key), type) : null;
     }
 
-    public static <T, Z> void setData(Entity entity, String key, PersistentDataType<T, Z> type, Z value) {
+    public static <T, Z> Entity setData(Entity entity, String key, PersistentDataType<T, Z> type, Z value) {
         entity.getPersistentDataContainer().set(new NamespacedKey(FluidPlugin.getPlugin(), key), type, value);
+        return entity;
     }
 
     public static <T, Z> boolean hasData(Entity entity, String key, PersistentDataType<T, Z> type) {
@@ -38,5 +44,10 @@ public class FluidEntity {
             return false;
         }
         return entity.getPersistentDataContainer().has(new NamespacedKey(FluidPlugin.getPlugin(), key), type);
+    }
+
+    public static Entity removeData(Entity entity, String key) {
+        entity.getPersistentDataContainer().remove(new NamespacedKey(FluidPlugin.getPlugin(), key));
+        return entity;
     }
 }

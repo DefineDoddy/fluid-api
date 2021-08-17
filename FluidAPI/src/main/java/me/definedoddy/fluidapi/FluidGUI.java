@@ -3,7 +3,9 @@ package me.definedoddy.fluidapi;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -16,11 +18,13 @@ public class FluidGUI {
     private InventoryType type;
     private int size;
     private InventoryHolder owner;
-    private FluidListener<InventoryClickEvent> listener;
+    private FluidListener<InventoryClickEvent> clickListener;
+    private FluidListener<InventoryDragEvent> dragListener;
     private Inventory inventory;
-    private boolean listenerDefaultActive;
-    private Map<Integer, Item> items = new HashMap<>();
+    private final Map<Integer, Item> items = new HashMap<>();
     private String title;
+    private boolean canAddItems;
+    private boolean canTakeItems;
 
     public FluidGUI(InventoryType type) {
         this.type = type;
@@ -50,41 +54,32 @@ public class FluidGUI {
         return this;
     }
 
-    public FluidGUI draggable() {
-        return setDraggable(true);
-    }
-
-    public FluidGUI setDraggable(boolean draggable) {
-        if (listener != null) {
-            listener.setActive(!draggable);
-        } else {
-            listenerDefaultActive = !draggable;
-        }
+    public FluidGUI canAddItems() {
+        setCanAddItems(true);
         return this;
     }
 
-    private void initListeners() {
-        listener = new FluidListener<>(InventoryClickEvent.class) {
-            @Override
-            public void run() {
-                Inventory inv = getData().getInventory();
-                if (inv == inventory) {
-                    getData().setCancelled(true);
-                    Item item = items.get(getData().getSlot());
-                    item.clicker = (Player) getData().getWhoClicked();
-                    item.shiftClick = getData().isShiftClick();
-                    if (getData().isLeftClick()) {
-                        item.leftClick();
-                    } else if (getData().isRightClick()) {
-                        item.rightClick();
-                    }
-                }
-            }
-        }.setActive(listenerDefaultActive);
+    public FluidGUI setCanAddItems(boolean canAddItems) {
+        this.canAddItems = canAddItems;
+        return this;
+    }
+
+    public FluidGUI canTakeItems() {
+        setCanTakeItems(true);
+        return this;
+    }
+
+    public FluidGUI setCanTakeItems(boolean canTakeItems) {
+        this.canTakeItems = canTakeItems;
+        return this;
     }
 
     public FluidGUI addItems(Map<Integer, Item> items) {
-        this.items = items;
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
+            entry.getValue().gui = this;
+            entry.getValue().slot = entry.getKey();
+            this.items.put(entry.getKey(), entry.getValue());
+        }
         return this;
     }
 
@@ -93,8 +88,58 @@ public class FluidGUI {
         return this;
     }
 
-    public abstract static class Item {
+    public FluidGUI unregister() {
+        clickListener.unregister();
+        dragListener.unregister();
+        return this;
+    }
+
+    private void initListeners() {
+        clickListener = new FluidListener<>(InventoryClickEvent.class) {
+            @Override
+            public void run() {
+                if (getData().getClickedInventory() == inventory) {
+                    if (isNull(getData().getCursor())) {
+                        if (!getData().isShiftClick() || !canTakeItems) {
+                            getData().setCancelled(true);
+                        }
+                    } else if (!canAddItems) {
+                        getData().setCancelled(true);
+                    }
+                    Item item = items.get(getData().getSlot());
+                    if (item != null) {
+                        item.clickType = getData().getClick();
+                        item.shiftClick = getData().isShiftClick();
+                        item.clicker = (Player) getData().getWhoClicked();
+                        item.internalClick();
+                        item.onClick();
+                    }
+                } else if (!isNull(getData().getCurrentItem()) && getData().isShiftClick() && !canAddItems) {
+                    getData().setCancelled(true);
+                }
+            }
+        };
+
+        dragListener = new FluidListener<>(InventoryDragEvent.class) {
+            @Override
+            public void run() {
+                Inventory inv = getData().getView().getInventory(getData().getRawSlots().stream().toList().get(0));
+                if (inv == inventory && !canAddItems) {
+                    getData().setCancelled(true);
+                }
+            }
+        };
+    }
+
+    private boolean isNull(ItemStack item) {
+        return item == null || item.getType() == Material.AIR;
+    }
+
+    public static class Item {
         private final ItemStack item;
+        private int slot;
+        private FluidGUI gui;
+        private ClickType clickType;
         private boolean shiftClick;
         private Player clicker;
 
@@ -114,12 +159,14 @@ public class FluidGUI {
             this.item = new ItemStack(material, amount);
         }
 
-        public abstract void leftClick();
-
-        public abstract void rightClick();
+        public void onClick() { };
 
         public ItemStack getItem() {
             return item;
+        }
+
+        public ClickType getClickType() {
+            return clickType;
         }
 
         public boolean isShiftClick() {
@@ -129,5 +176,12 @@ public class FluidGUI {
         public Player getClicker() {
             return clicker;
         }
+
+        private void internalClick() {
+            if (gui.canTakeItems) {
+                gui.items.remove(slot);
+            }
+        }
+
     }
 }

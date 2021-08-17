@@ -26,14 +26,20 @@ public class FluidBlock {
         return hasData(block, key, type);
     }
 
+    public FluidBlock removeData(String key) {
+        removeData(block, key);
+        return this;
+    }
+
     public static <T, Z> Z getData(Block block, String key, PersistentDataType<T, Z> type) {
         PersistentDataContainer container = ((TileState)block.getState()).getPersistentDataContainer();
         return hasData(block, key, type) ? container.get(new NamespacedKey(FluidPlugin.getPlugin(), key), type) : null;
     }
 
-    public static <T, Z> void setData(Block block, String key, PersistentDataType<T, Z> type, Z value) {
+    public static <T, Z> Block setData(Block block, String key, PersistentDataType<T, Z> type, Z value) {
         PersistentDataContainer container = ((TileState)block.getState()).getPersistentDataContainer();
         container.set(new NamespacedKey(FluidPlugin.getPlugin(), key), type, value);
+        return block;
     }
 
     public static <T, Z> boolean hasData(Block block, String key, PersistentDataType<T, Z> type) {
@@ -42,5 +48,11 @@ public class FluidBlock {
         }
         PersistentDataContainer container = ((TileState)block.getState()).getPersistentDataContainer();
         return container.has(new NamespacedKey(FluidPlugin.getPlugin(), key), type);
+    }
+
+    public static Block removeData(Block block, String key) {
+        PersistentDataContainer container = ((TileState)block.getState()).getPersistentDataContainer();
+        container.remove(new NamespacedKey(FluidPlugin.getPlugin(), key));
+        return block;
     }
 }

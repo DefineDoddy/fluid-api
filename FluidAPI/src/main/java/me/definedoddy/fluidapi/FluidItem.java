@@ -115,6 +115,11 @@ public class FluidItem {
         return hasData(item, key, type);
     }
 
+    public FluidItem removeData(String key) {
+        removeData(item, key);
+        return this;
+    }
+
     public static <T, Z> Z getData(ItemStack item, String key, PersistentDataType<T, Z> type) {
         return hasData(item, key, type) ? item.getItemMeta().getPersistentDataContainer()
                 .get(new NamespacedKey(FluidPlugin.getPlugin(), key), type) : null;
@@ -132,6 +137,13 @@ public class FluidItem {
             return false;
         }
         return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(FluidPlugin.getPlugin(), key), type);
+    }
+
+    public static ItemStack removeData(ItemStack item, String key) {
+        ItemMeta meta = item.getItemMeta();
+        meta.getPersistentDataContainer().remove(new NamespacedKey(FluidPlugin.getPlugin(), key));
+        item.setItemMeta(meta);
+        return item;
     }
 
     public FluidItem enchant(Enchantment enchantment, int level) {
