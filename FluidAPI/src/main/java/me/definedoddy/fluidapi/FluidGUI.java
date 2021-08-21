@@ -114,7 +114,8 @@ public class FluidGUI {
                         item.internalClick();
                         item.onClick();
                     }
-                } else if (!isNull(getData().getCurrentItem()) && getData().isShiftClick() && !canAddItems) {
+                } else if (getData().getView().getTopInventory() == inventory &&
+                        !isNull(getData().getCurrentItem()) && getData().isShiftClick() && !canAddItems) {
                     getData().setCancelled(true);
                 }
             }

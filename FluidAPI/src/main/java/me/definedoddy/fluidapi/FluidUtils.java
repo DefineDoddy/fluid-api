@@ -6,6 +6,8 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -77,5 +79,14 @@ public class FluidUtils {
     public static String[] fillArray(String[] array, String value) {
         Arrays.fill(array, value);
         return array;
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) {
+            throw new IllegalArgumentException();
+        }
+        BigDecimal bd = BigDecimal.valueOf(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

@@ -2,10 +2,16 @@ package me.definedoddy.fluidapi;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Scanner;
+
 public class FluidPlugin {
     private static JavaPlugin plugin;
     private static String name;
     private static String chatPrefix;
+    private static int resourceId;
 
     public static void register(JavaPlugin plugin, String name) {
         register(plugin, name, null);
@@ -32,5 +38,30 @@ public class FluidPlugin {
 
     public static void setChatPrefix(String prefix) {
         chatPrefix = prefix;
+    }
+
+    public static void setResourceId(int id) {
+        resourceId = id;
+    }
+
+    public static String getLatestVersion() {
+        return new AsynchronousTask.Type<String>() {
+            @Override
+            public String run() {
+                try (InputStream stream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openStream()) {
+                    Scanner scanner = new Scanner(stream);
+                    if (scanner.hasNext()) {
+                        return scanner.next();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }.getReturn();
+    }
+
+    public static boolean isLatestVersion() {
+        return plugin.getDescription().getVersion().equalsIgnoreCase(getLatestVersion());
     }
 }

@@ -98,7 +98,7 @@ public class FluidMessage {
                 } else if (type == Type.ACTIONBAR) {
                     receiver.sendBarMessage(message.getText());
                 } else if (type == Type.TITLE) {
-                    receiver.sendTitle(message.getText(), "", 1, 3, 1);
+                    receiver.sendTitle(message.getText(), "", 3, 60, 3);
                 }
             }
         } else {
@@ -317,7 +317,7 @@ public class FluidMessage {
 
         public void sendMessage(TextComponent message) {
             if (FluidMessage.this.usePrefix) {
-                TextComponent component = new TextComponent(prefix);
+                TextComponent component = new TextComponent(toColor(prefix));
                 component.addExtra(FluidMessage.this.message);
                 message = component;
             }
@@ -336,7 +336,7 @@ public class FluidMessage {
 
         public void sendTitle(String title, String subtitle, int fadeIn, int stay, int fadeOut) {
             if (player != null) {
-                player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
+                player.sendTitle(title, toColor(subtitle), fadeIn, stay, fadeOut);
             }
         }
     }
