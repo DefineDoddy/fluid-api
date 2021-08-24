@@ -4,10 +4,14 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -15,6 +19,12 @@ import java.util.List;
 
 public class FluidItem {
     private final ItemStack item;
+    private final List<ListenerType> listenerTypes = new ArrayList<>();
+    private FluidListener<PlayerInteractEvent> interactListener;
+    private FluidListener<PlayerDropItemEvent> dropListener;
+    private FluidListener<PlayerPickupItemEvent> pickupListener;
+    private static int globalIdCount;
+    private int id;
 
     public FluidItem(Material material) {
         item = new ItemStack(material);
@@ -30,6 +40,93 @@ public class FluidItem {
 
     public ItemStack build() {
         return item;
+    }
+
+    public FluidItem registerListeners() {
+        registerListeners(ListenerType.values());
+        return this;
+    }
+
+    public FluidItem registerListeners(@NotNull ListenerType... types) {
+        if (equalsIgnoreAmount(new ItemStack(item.getType()))) {
+            setData("fluid_item_event_" + globalIdCount, PersistentDataType.INTEGER, 1);
+            id = globalIdCount;
+            globalIdCount++;
+        }
+        for (ListenerType type : types) {
+            if (type == ListenerType.INTERACT && interactListener == null) {
+                interactListener = new FluidListener<>(PlayerInteractEvent.class) {
+                    @Override
+                    public void run() {
+                        if (getData().getItem() != null && equalsIgnoreAmount(getData().getItem())) {
+                            onInteract(getData());
+                        }
+                    }
+                };
+            } else if (type == ListenerType.DROP && dropListener == null) {
+                dropListener = new FluidListener<>(PlayerDropItemEvent.class) {
+                    @Override
+                    public void run() {
+                        if (equalsIgnoreAmount(getData().getItemDrop().getItemStack())) {
+                            onDrop(getData());
+                        }
+                    }
+                };
+            } else if (type == ListenerType.PICKUP && pickupListener == null) {
+                pickupListener = new FluidListener<>(PlayerPickupItemEvent.class) {
+                    @Override
+                    public void run() {
+                        if (equalsIgnoreAmount(getData().getItem().getItemStack())) {
+                            onPickup(getData());
+                        }
+                    }
+                };
+            }
+        }
+        return this;
+    }
+
+    public FluidItem unregisterListeners() {
+        unregisterListeners(ListenerType.values());
+        return this;
+    }
+
+    public FluidItem unregisterListeners(ListenerType... types) {
+        for (ListenerType type : types) {
+            if (type == ListenerType.INTERACT && interactListener != null) {
+                interactListener.unregister();
+                interactListener = null;
+            } else if (type == ListenerType.DROP && dropListener != null) {
+                dropListener.unregister();
+                dropListener = null;
+            } else if (type == ListenerType.PICKUP && pickupListener != null) {
+                pickupListener.unregister();
+                pickupListener = null;
+            }
+        }
+        if (interactListener == null && dropListener == null && pickupListener == null &&
+                hasData("fluid_item_event_" + id, PersistentDataType.INTEGER)) {
+            removeData("fluid_item_event_" + id);
+        }
+        return this;
+    }
+
+    public void onInteract(PlayerInteractEvent event) {
+
+    }
+
+    public void onDrop(PlayerDropItemEvent event) {
+
+    }
+
+    public void onPickup(PlayerPickupItemEvent event) {
+
+    }
+
+    public enum ListenerType {
+        INTERACT,
+        DROP,
+        PICKUP
     }
 
     public FluidItem setName(String name) {
@@ -95,11 +192,22 @@ public class FluidItem {
     }
 
     public boolean hasSameMeta(ItemStack item) {
-        return item != null & this.item.hasItemMeta() && item.hasItemMeta() && this.item.getItemMeta().equals(item.getItemMeta());
+        return haveSameMeta(this.item, item);
+    }
+
+    public boolean equalsIgnoreAmount(ItemStack item) {
+        return equalsIgnoreAmount(this.item, item);
     }
 
     public static boolean haveSameMeta(ItemStack a, ItemStack b) {
         return a != null && b != null & a.hasItemMeta() && b.hasItemMeta() && a.getItemMeta().equals(b.getItemMeta());
+    }
+
+    public static boolean equalsIgnoreAmount(ItemStack a, ItemStack b) {
+        if (a == null || b == null) return false;
+        ItemStack ab = a.clone();
+        ab.setAmount(b.getAmount());
+        return ab.equals(b);
     }
 
     public <T, Z> Z getData(String key, PersistentDataType<T, Z> type) {

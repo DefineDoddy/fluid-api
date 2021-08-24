@@ -31,7 +31,7 @@ public class FluidGUI {
     }
 
     public FluidGUI(int size) {
-        this.size = size;
+        this.size = getSize(size);
     }
 
     public Inventory build() {
@@ -92,6 +92,10 @@ public class FluidGUI {
         clickListener.unregister();
         dragListener.unregister();
         return this;
+    }
+
+    private int getSize(int size) {
+        return Math.max(9, 9 * (Math.round(size / 9f)));
     }
 
     private void initListeners() {

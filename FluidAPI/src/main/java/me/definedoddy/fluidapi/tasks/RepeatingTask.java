@@ -1,5 +1,6 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.tasks;
 
+import me.definedoddy.fluidapi.FluidPlugin;
 import org.bukkit.Bukkit;
 
 public abstract class RepeatingTask {

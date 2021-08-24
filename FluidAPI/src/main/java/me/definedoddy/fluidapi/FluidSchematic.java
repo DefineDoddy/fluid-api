@@ -1,5 +1,6 @@
 package me.definedoddy.fluidapi;
 
+import me.definedoddy.fluidapi.tasks.DelayedTask;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -143,44 +144,49 @@ public class FluidSchematic {
     }
 
     public void paste(Location location, AnimType animType) {
-        paste(location, animType, 2);
+        paste(location, animType, animType == AnimType.STEP ? 1 : 2);
     }
 
     public void paste(Location location, AnimType animType, int interval) {
         ConfigurationSection blocksX = config.getConfigurationSection("blocks");
         int count = 0;
-        int maxHeight = 0;
+        int finishCount = 0;
         for (String x : blocksX.getKeys(false)) {
             ConfigurationSection blocksY = config.getConfigurationSection("blocks." + x);
             for (String y : blocksY.getKeys(false)) {
                 ConfigurationSection blocksZ = config.getConfigurationSection("blocks." + x + "." + y);
-                if (Integer.parseInt(y) > maxHeight) {
-                    maxHeight = Integer.parseInt(y);
+                if (animType == AnimType.LAYER && Integer.parseInt(y) > finishCount) {
+                    finishCount = Integer.parseInt(y);
                 }
                 for (String z : blocksZ.getKeys(false)) {
                     String blockData = config.getString("blocks." + x + "." + y + "." + z);
-                    if (animType == AnimType.LAYER || animType == AnimType.STEP) {
-                        new DelayedTask((long) count * interval) {
-                            @Override
-                            public void run() {
-                                Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
-                                placeBlock(blockData, loc);
-                            }
-                        };
-                    } else {
-                        Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
-                        placeBlock(blockData, loc);
+                    if (getMaterial(blockData) != Material.SPAWNER) {
+                        if (animType == AnimType.LAYER || animType == AnimType.STEP) {
+                            new DelayedTask((long) count * interval) {
+                                @Override
+                                public void run() {
+                                    Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
+                                    placeBlock(blockData, loc);
+                                }
+                            };
+                        } else {
+                            Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
+                            placeBlock(blockData, loc);
+                        }
                     }
                 }
                 if (animType == AnimType.LAYER || animType == AnimType.STEP) {
                     count++;
+                    if (animType == AnimType.STEP) {
+                        finishCount++;
+                    }
                 }
             }
             if (animType == AnimType.LAYER) {
                 count = 0;
             }
         }
-        new DelayedTask((long) maxHeight * interval) {
+        new DelayedTask((long) finishCount * interval) {
             @Override
             public void run() {
                 ConfigurationSection spawners = config.getConfigurationSection("spawners");
@@ -238,7 +244,7 @@ public class FluidSchematic {
     private void placeBlock(String data, Location location) {
         if (data != null) {
             Block block = location.getBlock();
-            Material material = Material.getMaterial(data.replace("minecraft:", "").toUpperCase());
+            Material material = getMaterial(data);
             if (material != null && material != Material.AIR) {
                 block.setType(material);
             }
@@ -247,6 +253,10 @@ public class FluidSchematic {
             }
             block.getState().update(true);
         }
+    }
+
+    private Material getMaterial(String data) {
+        return Material.getMaterial(data.replace("minecraft:", "").toUpperCase());
     }
 
     private void setInventory(ItemStack[] contents, Location location) {
@@ -260,9 +270,9 @@ public class FluidSchematic {
 
     private void setSpawner(EntityType type, Location location) {
         Block block = location.getBlock();
-        if (block.getState() instanceof CreatureSpawner spawner) {
-            spawner.setSpawnedType(type);
-            spawner.update();
-        }
+        block.setType(Material.SPAWNER);
+        CreatureSpawner spawner = (CreatureSpawner) block.getState();
+        spawner.setSpawnedType(type);
+        spawner.update();
     }
 }

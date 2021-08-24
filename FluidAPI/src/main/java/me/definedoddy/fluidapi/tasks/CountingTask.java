@@ -1,5 +1,6 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.tasks;
 
+import me.definedoddy.fluidapi.FluidPlugin;
 import org.bukkit.Bukkit;
 
 public abstract class CountingTask {
@@ -36,6 +37,7 @@ public abstract class CountingTask {
                 loop++;
                 if (loop >= count) {
                     cancel();
+                    onComplete();
                 }
                 CountingTask.this.run();
             }
@@ -50,6 +52,7 @@ public abstract class CountingTask {
                 loop++;
                 if (loop >= count) {
                     cancel();
+                    onComplete();
                 }
                 CountingTask.this.run();
             }
@@ -57,6 +60,8 @@ public abstract class CountingTask {
     }
 
     public abstract void run();
+
+    public void onComplete() { };
 
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskId);
@@ -80,6 +85,8 @@ public abstract class CountingTask {
 
         public abstract T run();
 
+        public void onComplete() { };
+
         public void cancel() {
             Bukkit.getScheduler().cancelTask(taskId);
         }
@@ -100,6 +107,7 @@ public abstract class CountingTask {
                     loop++;
                     if (loop >= count) {
                         cancel();
+                        onComplete();
                     }
                     type = Type.this.run();
                 }
@@ -114,6 +122,7 @@ public abstract class CountingTask {
                     loop++;
                     if (loop >= count) {
                         cancel();
+                        onComplete();
                     }
                     type = Type.this.run();
                 }

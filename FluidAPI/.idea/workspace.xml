@@ -7,13 +7,20 @@
     <list default="true" id="ee5aa6ad-6a05-4208-9461-2cec783275f3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CountingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CountingTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/DelayedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/DelayedTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/AsynchronousTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/tasks/AsynchronousTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CountingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/tasks/CountingTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/DelayedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/tasks/DelayedTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidLoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidLoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidLootEntry.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/RepeatingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/RepeatingTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/RepeatingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/tasks/RepeatingTask.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +48,14 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidGUI.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidUtils.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/tasks/AsynchronousTask.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
@@ -55,10 +70,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="add_unversioned_files" value="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidtest/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/resources/fluidtest/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/resources/plugin.yml" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidtest/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/resources/fluidtest/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidTest.java&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/resources/plugin.yml&#10;E:/Development/Minecraft/Plugins/fluid-api/FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidAPI.java" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
     <property name="typescript.add.unambiguous.imports.on.the.fly" value="true" />
   </component>
   <component name="RecentsManager">
@@ -105,7 +122,9 @@
       <workItem from="1629042961206" duration="2262000" />
       <workItem from="1629052847495" duration="46087000" />
       <workItem from="1629205954971" duration="2950000" />
-      <workItem from="1629312061909" duration="9069000" />
+      <workItem from="1629312061909" duration="16184000" />
+      <workItem from="1629574585232" duration="11558000" />
+      <workItem from="1629724991044" duration="22858000" />
     </task>
     <servers />
   </component>

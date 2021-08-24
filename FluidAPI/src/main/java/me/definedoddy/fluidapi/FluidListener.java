@@ -1,9 +1,11 @@
 package me.definedoddy.fluidapi;
 
+import me.definedoddy.fluidapi.tasks.DelayedTask;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.EventExecutor;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class FluidListener<T extends Event> implements Listener, EventExecutor {
     private boolean active = true;
@@ -15,7 +17,7 @@ public abstract class FluidListener<T extends Event> implements Listener, EventE
         FluidPlugin.getPlugin().getServer().getPluginManager().registerEvent(type, this, EventPriority.NORMAL, this, FluidPlugin.getPlugin());
     }
 
-    public void execute(Listener listener, Event event) {
+    public void execute(@NotNull Listener listener, @NotNull Event event) {
         this.event = event;
         if (active) {
             calls++;

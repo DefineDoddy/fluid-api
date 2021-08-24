@@ -6,7 +6,7 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>pre-0.4.7</version>
+    <version>pre-0.5.0</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -52,6 +52,12 @@
             <artifactId>spigot-api</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

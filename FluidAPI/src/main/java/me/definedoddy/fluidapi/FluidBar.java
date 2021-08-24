@@ -1,5 +1,6 @@
 package me.definedoddy.fluidapi;
 
+import me.definedoddy.fluidapi.tasks.RepeatingTask;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.boss.BarColor;

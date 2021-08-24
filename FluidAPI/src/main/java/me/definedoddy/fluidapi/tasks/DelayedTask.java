@@ -1,5 +1,6 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.tasks;
 
+import me.definedoddy.fluidapi.FluidPlugin;
 import org.bukkit.Bukkit;
 
 public abstract class DelayedTask {
@@ -15,11 +16,22 @@ public abstract class DelayedTask {
     public DelayedTask(long delay, boolean async) {
         this.delay = delay;
         this.async = async;
-        taskId = async ? Bukkit.getScheduler().runTaskLaterAsynchronously(FluidPlugin.getPlugin(), this::run, delay).getTaskId()
-                : Bukkit.getScheduler().runTaskLater(FluidPlugin.getPlugin(), this::run, delay).getTaskId();
+        if (async) {
+            taskId = Bukkit.getScheduler().runTaskLaterAsynchronously(FluidPlugin.getPlugin(), () -> {
+                run();
+                onComplete();
+            }, delay).getTaskId();
+        } else {
+            taskId = Bukkit.getScheduler().runTaskLater(FluidPlugin.getPlugin(), () -> {
+                run();
+                onComplete();
+            }, delay).getTaskId();
+        }
     }
 
     public abstract void run();
+
+    public void onComplete() { };
 
     public void cancel() {
         Bukkit.getScheduler().cancelTask(taskId);
@@ -42,6 +54,8 @@ public abstract class DelayedTask {
         }
 
         public abstract T run();
+
+        public void onComplete() { };
 
         public void cancel() {
             Bukkit.getScheduler().cancelTask(taskId);

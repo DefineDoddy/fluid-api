@@ -4,8 +4,11 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public abstract class FluidCommand implements CommandExecutor, TabCompleter {
     private final List<Argument> tabArguments = new ArrayList<>();
@@ -48,10 +51,10 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
         for (ArgumentIf argumentIf : argumentIfs) {
             if (args.length == argumentIf.index) {
                 if (argumentIf.ifArgument != null) {
-                    if (args[argumentIf.index - 2].equalsIgnoreCase(argumentIf.ifArgument)) {
+                    if (args[argumentIf.index - 2].equalsIgnoreCase(argumentIf.ifArgument) && !argumentIf.exclusions.contains((Player) sender)) {
                         toSend.add(argumentIf.name);
                     }
-                } else {
+                } else if (!argumentIf.exclusions.contains((Player) sender)) {
                     toSend.add(argumentIf.name);
                 }
             }
@@ -61,10 +64,10 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
 
     private void loopArgs(Argument arg) {
         if (arg.parent != null) {
-            argumentIfs.add(new ArgumentIf(arg.name, arg.index, arg.parent.name));
+            argumentIfs.add(new ArgumentIf(arg.name, arg.index, arg.parent.name, arg.exclusions));
             loopArgs(arg.parent);
         } else {
-            argumentIfs.add(new ArgumentIf(arg.name, arg.index));
+            argumentIfs.add(new ArgumentIf(arg.name, arg.index, null, arg.exclusions));
         }
     }
 
@@ -72,15 +75,13 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
         public String name;
         public int index;
         public String ifArgument;
+        public List<Player> exclusions;
 
-        public ArgumentIf(String name, int index) {
-            this(name, index, null);
-        }
-
-        public ArgumentIf(String name, int index, String ifArgument) {
+        public ArgumentIf(String name, int index, String ifArgument, List<Player> exclusions) {
             this.name = name;
             this.index = index;
             this.ifArgument = ifArgument;
+            this.exclusions = exclusions;
         }
     }
 
@@ -88,6 +89,7 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
         private final String name;
         private int index;
         private Argument parent;
+        private List<Player> exclusions = new ArrayList<>();
 
         public Argument(String name, int index) {
             this.name = name;
@@ -107,6 +109,26 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
 
         public Argument setParent(Argument parent) {
             this.parent = parent;
+            return this;
+        }
+
+        public Argument removeParent() {
+            this.parent = null;
+            return this;
+        }
+
+        public Argument setExclusions(List<Player> exclusions) {
+            this.exclusions = exclusions;
+            return this;
+        }
+
+        public Argument addExclusions(Player... exclusions) {
+            this.exclusions.addAll(Arrays.asList(exclusions));
+            return this;
+        }
+
+        public Argument removeExclusions(Player... exclusions) {
+            this.exclusions.removeAll(Arrays.asList(exclusions));
             return this;
         }
 

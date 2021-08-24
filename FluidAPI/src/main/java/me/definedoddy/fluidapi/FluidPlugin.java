@@ -21,6 +21,7 @@ public class FluidPlugin {
         FluidPlugin.plugin = plugin;
         FluidPlugin.name = name;
         FluidPlugin.chatPrefix = chatPrefix;
+        EventHandler.init();
         new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name).send();
     }
 
@@ -45,23 +46,22 @@ public class FluidPlugin {
     }
 
     public static String getLatestVersion() {
-        return new AsynchronousTask.Type<String>() {
-            @Override
-            public String run() {
-                try (InputStream stream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openStream()) {
-                    Scanner scanner = new Scanner(stream);
-                    if (scanner.hasNext()) {
-                        return scanner.next();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
+        try (InputStream stream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openStream()) {
+            Scanner scanner = new Scanner(stream);
+            if (scanner.hasNext()) {
+                return scanner.next();
             }
-        }.getReturn();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getVersion() {
+        return plugin.getDescription().getVersion();
     }
 
     public static boolean isLatestVersion() {
-        return plugin.getDescription().getVersion().equalsIgnoreCase(getLatestVersion());
+        return getVersion().equalsIgnoreCase(getLatestVersion());
     }
 }
