@@ -1,6 +1,6 @@
 package me.definedoddy.fluidapi;
 
-import me.definedoddy.fluidapi.tasks.DelayedTask;
+import me.definedoddy.fluidapi.utils.FluidUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -162,13 +162,10 @@ public class FluidSchematic {
                     String blockData = config.getString("blocks." + x + "." + y + "." + z);
                     if (getMaterial(blockData) != Material.SPAWNER) {
                         if (animType == AnimType.LAYER || animType == AnimType.STEP) {
-                            new DelayedTask((long) count * interval) {
-                                @Override
-                                public void run() {
-                                    Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
-                                    placeBlock(blockData, loc);
-                                }
-                            };
+                            new FluidTask(() -> {
+                                Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
+                                placeBlock(blockData, loc);
+                            }).run((long) count * interval);
                         } else {
                             Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
                             placeBlock(blockData, loc);
@@ -186,48 +183,45 @@ public class FluidSchematic {
                 count = 0;
             }
         }
-        new DelayedTask((long) finishCount * interval) {
-            @Override
-            public void run() {
-                ConfigurationSection spawners = config.getConfigurationSection("spawners");
-                if (spawners != null) {
-                    for (String loc : spawners.getKeys(false)) {
-                        String[] locSplit = loc.split(",");
-                        EntityType type = EntityType.valueOf(spawners.get(loc).toString());
-                        Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
-                                Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
-                        setSpawner(type, newLoc);
-                    }
-                }
-                ConfigurationSection entities = config.getConfigurationSection("entities");
-                if (entities != null) {
-                    for (String loc : entities.getKeys(false)) {
-                        String[] locSplit = loc.split(",");
-                        EntityType type = EntityType.valueOf(config.getString("entities." + loc));
-                        Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
-                                Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
-                        try {
-                            newLoc.getWorld().spawnEntity(getCenter(newLoc), type);
-                        } catch (Exception ignored) { }
-                    }
-                }
-                ConfigurationSection inventories = config.getConfigurationSection("inventories");
-                if (inventories != null) {
-                    for (String loc : inventories.getKeys(false)) {
-                        String[] locSplit = loc.split(",");
-                        List<ItemStack> contents = new ArrayList<>();
-                        for (Object item : inventories.getConfigurationSection(loc).getValues(false).values()) {
-                            String string = item.toString();
-                            String[] itemSplit = string.split(",");
-                            contents.add(new ItemStack(Material.valueOf(itemSplit[0]), Integer.parseInt(itemSplit[1])));
-                        }
-                        Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
-                                Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
-                        setInventory(contents.toArray(new ItemStack[0]), newLoc);
-                    }
+        new FluidTask(() -> {
+            ConfigurationSection spawners = config.getConfigurationSection("spawners");
+            if (spawners != null) {
+                for (String loc : spawners.getKeys(false)) {
+                    String[] locSplit = loc.split(",");
+                    EntityType type = EntityType.valueOf(spawners.get(loc).toString());
+                    Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
+                            Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
+                    setSpawner(type, newLoc);
                 }
             }
-        };
+            ConfigurationSection entities = config.getConfigurationSection("entities");
+            if (entities != null) {
+                for (String loc : entities.getKeys(false)) {
+                    String[] locSplit = loc.split(",");
+                    EntityType type = EntityType.valueOf(config.getString("entities." + loc));
+                    Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
+                            Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
+                    try {
+                        newLoc.getWorld().spawnEntity(getCenter(newLoc), type);
+                    } catch (Exception ignored) { }
+                }
+            }
+            ConfigurationSection inventories = config.getConfigurationSection("inventories");
+            if (inventories != null) {
+                for (String loc : inventories.getKeys(false)) {
+                    String[] locSplit = loc.split(",");
+                    List<ItemStack> contents = new ArrayList<>();
+                    for (Object item : inventories.getConfigurationSection(loc).getValues(false).values()) {
+                        String string = item.toString();
+                        String[] itemSplit = string.split(",");
+                        contents.add(new ItemStack(Material.valueOf(itemSplit[0]), Integer.parseInt(itemSplit[1])));
+                    }
+                    Location newLoc = location.clone().add(new Vector(Integer.parseInt(locSplit[0]),
+                            Integer.parseInt(locSplit[1]), Integer.parseInt(locSplit[2])));
+                    setInventory(contents.toArray(new ItemStack[0]), newLoc);
+                }
+            }
+        }).run((long) finishCount * interval);
     }
 
     private Location getCenter(Location loc) {

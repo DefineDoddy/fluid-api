@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class FluidGroup {
-    public static List<FluidGroup> getGroups() {
+public class FluidTeam {
+    public static List<FluidTeam> getGroups() {
         return groups;
     }
 
-    private static final List<FluidGroup> groups = new ArrayList<>();
+    private static final List<FluidTeam> groups = new ArrayList<>();
 
     public static ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
@@ -87,7 +87,7 @@ public class FluidGroup {
         return this.getPlayers().contains(player);
     }
 
-    public FluidGroup(String name, List<Player> players) {
+    public FluidTeam(String name, List<Player> players) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
         for (Player player : players) {
@@ -95,7 +95,7 @@ public class FluidGroup {
         }
     }
 
-    public FluidGroup(String name, Collection<? extends Player> players) {
+    public FluidTeam(String name, Collection<? extends Player> players) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
         for (Player player : players) {
@@ -103,7 +103,7 @@ public class FluidGroup {
         }
     }
 
-    public FluidGroup(String name) {
+    public FluidTeam(String name) {
         scoreboard = scoreboardManager.getNewScoreboard();
         this.team = scoreboard.registerNewTeam(name);
     }

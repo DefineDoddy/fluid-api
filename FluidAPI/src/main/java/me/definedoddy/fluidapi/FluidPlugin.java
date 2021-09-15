@@ -10,19 +10,28 @@ import java.util.Scanner;
 public class FluidPlugin {
     private static JavaPlugin plugin;
     private static String name;
-    private static String chatPrefix;
     private static int resourceId;
 
-    public static void register(JavaPlugin plugin, String name) {
-        register(plugin, name, null);
+    public static <T> void register(T plugin) {
+        register(plugin, ((JavaPlugin) plugin).getName(), true);
     }
 
-    public static void register(JavaPlugin plugin, String name, String chatPrefix) {
-        FluidPlugin.plugin = plugin;
+    public static <T> void register(T plugin, boolean showMessage) {
+        register(plugin, ((JavaPlugin) plugin).getName(), showMessage);
+    }
+
+    public static <T> void register(T plugin, String name) {
+        register(plugin, name, true);
+    }
+
+    public static <T> void register(T plugin, String name, boolean showMessage) {
+        FluidPlugin.plugin = (JavaPlugin) plugin;
         FluidPlugin.name = name;
-        FluidPlugin.chatPrefix = chatPrefix;
         EventHandler.init();
-        new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name).send();
+        FluidCommand.register(plugin);
+        if (showMessage) {
+            new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name + " - " + getVersion()).send();
+        }
     }
 
     public static JavaPlugin getPlugin() {
@@ -31,14 +40,6 @@ public class FluidPlugin {
 
     public static String getName() {
         return name;
-    }
-
-    public static String getChatPrefix() {
-        return chatPrefix;
-    }
-
-    public static void setChatPrefix(String prefix) {
-        chatPrefix = prefix;
     }
 
     public static void setResourceId(int id) {

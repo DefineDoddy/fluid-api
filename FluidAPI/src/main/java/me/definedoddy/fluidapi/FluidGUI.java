@@ -18,9 +18,8 @@ public class FluidGUI {
     private InventoryType type;
     private int size;
     private InventoryHolder owner;
-    private FluidListener<InventoryClickEvent> clickListener;
-    private FluidListener<InventoryDragEvent> dragListener;
     private Inventory inventory;
+    private FluidListener listener;
     private final Map<Integer, Item> items = new HashMap<>();
     private String title;
     private boolean canAddItems;
@@ -89,8 +88,9 @@ public class FluidGUI {
     }
 
     public FluidGUI unregister() {
-        clickListener.unregister();
-        dragListener.unregister();
+        if (listener != null) {
+            listener.unregister();
+        }
         return this;
     }
 
@@ -99,38 +99,34 @@ public class FluidGUI {
     }
 
     private void initListeners() {
-        clickListener = new FluidListener<>(InventoryClickEvent.class) {
-            @Override
-            public void run() {
-                if (getData().getClickedInventory() == inventory) {
-                    if (isNull(getData().getCursor())) {
-                        if (!getData().isShiftClick() || !canTakeItems) {
-                            getData().setCancelled(true);
+        listener = new FluidListener() {
+            public void drag(InventoryClickEvent e) {
+                if (e.getClickedInventory() == inventory) {
+                    if (isNull(e.getCursor())) {
+                        if (!e.isShiftClick() || !canTakeItems) {
+                            e.setCancelled(true);
                         }
                     } else if (!canAddItems) {
-                        getData().setCancelled(true);
+                        e.setCancelled(true);
                     }
-                    Item item = items.get(getData().getSlot());
+                    Item item = items.get(e.getSlot());
                     if (item != null) {
-                        item.clickType = getData().getClick();
-                        item.shiftClick = getData().isShiftClick();
-                        item.clicker = (Player) getData().getWhoClicked();
+                        item.clickType = e.getClick();
+                        item.shiftClick = e.isShiftClick();
+                        item.clicker = (Player) e.getWhoClicked();
                         item.internalClick();
                         item.onClick();
                     }
-                } else if (getData().getView().getTopInventory() == inventory &&
-                        !isNull(getData().getCurrentItem()) && getData().isShiftClick() && !canAddItems) {
-                    getData().setCancelled(true);
+                } else if (e.getView().getTopInventory() == inventory &&
+                        !isNull(e.getCurrentItem()) && e.isShiftClick() && !canAddItems) {
+                    e.setCancelled(true);
                 }
             }
-        };
 
-        dragListener = new FluidListener<>(InventoryDragEvent.class) {
-            @Override
-            public void run() {
-                Inventory inv = getData().getView().getInventory(getData().getRawSlots().stream().toList().get(0));
+            public void click(InventoryDragEvent e) {
+                Inventory inv = e.getView().getInventory(e.getRawSlots().stream().toList().get(0));
                 if (inv == inventory && !canAddItems) {
-                    getData().setCancelled(true);
+                    e.setCancelled(true);
                 }
             }
         };

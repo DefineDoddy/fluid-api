@@ -1,6 +1,5 @@
 package me.definedoddy.fluidapi;
 
-import me.definedoddy.fluidapi.tasks.RepeatingTask;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.boss.BarColor;
@@ -20,7 +19,7 @@ public class FluidBar {
     private final List<BarFlag> flags = new ArrayList<>();
     private BossBar bar;
     private NamespacedKey key;
-    private RepeatingTask tweenTask;
+    private FluidTask tweenTask;
 
     public FluidBar(String title) {
         this.title = title;
@@ -36,8 +35,9 @@ public class FluidBar {
         return null;
     }
 
-    public BossBar build() {
-        return createBar();
+    public FluidBar build() {
+        bar = createBar();
+        return this;
     }
 
     private BossBar createBar() {
@@ -130,7 +130,7 @@ public class FluidBar {
         if (tweenTask != null) {
             tweenTask.cancel();
         }
-        tweenTask = new RepeatingTask(0, 1) {
+        tweenTask = new FluidTask(new FluidRunnable() {
             final double time = value / ticks;
             double progress = bar.getProgress();
             final double start = bar.getProgress();
@@ -143,19 +143,19 @@ public class FluidBar {
                     if (progress < value) {
                         progress = progress + time;
                     } else {
-                        cancel();
+                        tweenTask.cancel();
                         tweenTask = null;
                     }
                 } else if (value < start) {
                     if (progress > value) {
                         progress = progress + time;
                     } else {
-                        cancel();
+                        tweenTask.cancel();
                         tweenTask = null;
                     }
                 }
             }
-        };
+        }).repeat(0, 1);
         return this;
     }
 }

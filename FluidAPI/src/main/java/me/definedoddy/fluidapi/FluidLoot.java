@@ -1,5 +1,6 @@
 package me.definedoddy.fluidapi;
 
+import me.definedoddy.fluidapi.utils.JavaUtils;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -16,37 +17,37 @@ public record FluidLoot(ArrayList<Entry> entries) {
                     return null;
                 }
                 entry = entries.get(i);
-                entry.getItem().setAmount(FluidUtils.random(entry.getMinCount(), entry.getMaxCount()));
+                entry.getItem().setAmount(JavaUtils.random(entry.getMinCount(), entry.getMaxCount()));
                 return entry;
             }
         }
         Entry entry = entries.get(entries.size() - 1);
-        entry.getItem().setAmount(FluidUtils.random(entry.getMinCount(), entry.getMaxCount()));
+        entry.getItem().setAmount(JavaUtils.random(entry.getMinCount(), entry.getMaxCount()));
         return entry;
     }
 
     public void populateInventory(Inventory inventory, int minCount, int maxCount) {
-        for (int i = 0; i < Math.min(FluidUtils.random(minCount, maxCount), inventory.getSize()); i++) {
+        for (int i = 0; i < Math.min(JavaUtils.random(minCount, maxCount), inventory.getSize()); i++) {
             int slot = new Random().nextInt(inventory.getSize());
             Entry entry = getRandom();
             if (entry != null) {
-                entry.getItem().setAmount(FluidUtils.random(entry.getMinCount(), entry.getMaxCount()));
+                entry.getItem().setAmount(JavaUtils.random(entry.getMinCount(), entry.getMaxCount()));
                 inventory.setItem(slot, entry.getItem());
             }
         }
     }
 
-    public static class LootTableBuilder {
+    public static class Builder {
         private int totalWeight = 0;
         private final ArrayList<Entry> entries = new ArrayList<>();
 
-        public LootTableBuilder add(ItemStack item, int weight, double vanishChance, int minCount, int maxCount) {
+        public Builder add(ItemStack item, int weight, double vanishChance, int minCount, int maxCount) {
             totalWeight += weight;
             entries.add(new Entry(item, weight, vanishChance, minCount, maxCount));
             return this;
         }
 
-        public LootTableBuilder addAll(ItemStack[] items, int[] weights, double[] vanishChance, int[] minCount, int[] maxCount) {
+        public Builder addAll(ItemStack[] items, int[] weights, double[] vanishChance, int[] minCount, int[] maxCount) {
             for (int i = 0; i < items.length; i++) {
                 totalWeight += weights[i];
                 entries.add(new Entry(items[i], weights[i], vanishChance[i], minCount[i], maxCount[i]));

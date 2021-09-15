@@ -5,22 +5,17 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class FluidConfig {
     private static Configuration mainConfig;
-    private static final Map<String, YamlConfiguration> configs = new HashMap<>();
-
     private final String name;
     private final YamlConfiguration config;
 
-    public static Configuration saveDefault() {
-        return saveDefault("config");
+    public static Configuration saveMainConfig() {
+        return saveMainConfig("config");
     }
 
-    public static Configuration saveDefault(String fileName) {
+    public static Configuration saveMainConfig(String fileName) {
         File configFile = new File(FluidPlugin.getPlugin().getDataFolder(), fileName + ".yml");
         if (!configFile.exists()) {
             FluidPlugin.getPlugin().saveDefaultConfig();
@@ -32,12 +27,8 @@ public class FluidConfig {
         return mainConfig;
     }
 
-    public static YamlConfiguration getConfig(String name) {
-        return configs.get(name);
-    }
-
-    public static List<YamlConfiguration> getConfigs() {
-        return configs.values().stream().toList();
+    public static YamlConfiguration getConfig(String fileName) {
+        return YamlConfiguration.loadConfiguration(new File(FluidPlugin.getPlugin().getDataFolder(), fileName + ".yml"));
     }
 
     public static Configuration reload() {
@@ -46,10 +37,8 @@ public class FluidConfig {
     }
 
     public FluidConfig(String name) {
-        YamlConfiguration config = new YamlConfiguration();
-        this.config = config;
+        this.config = new YamlConfiguration();
         this.name = name;
-        configs.put(name, config);
     }
 
     public YamlConfiguration getConfig() {

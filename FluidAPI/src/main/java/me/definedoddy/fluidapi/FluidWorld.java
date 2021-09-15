@@ -9,6 +9,7 @@ import org.bukkit.generator.ChunkGenerator.ChunkData;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.material.MaterialData;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.HashMap;
@@ -199,7 +200,7 @@ public class FluidWorld<T> {
 
             generator = new ChunkGenerator() {
                 @Override
-                public void generateNoise(WorldInfo worldInfo, Random random, int x, int z, ChunkData chunkData) {
+                public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int x, int z, @NotNull ChunkData chunkData) {
                     super.generateNoise(worldInfo, random, x, z, chunkData);
                 }
             };
@@ -223,32 +224,32 @@ public class FluidWorld<T> {
                 }
 
                 @Override
-                public void setBlock(int x, int y, int z, Material material) {
+                public void setBlock(int x, int y, int z, @NotNull Material material) {
 
                 }
 
                 @Override
-                public void setBlock(int x, int y, int z, MaterialData material) {
+                public void setBlock(int x, int y, int z, @NotNull MaterialData material) {
 
                 }
 
                 @Override
-                public void setBlock(int x, int y, int z, BlockData blockData) {
+                public void setBlock(int x, int y, int z, @NotNull BlockData blockData) {
 
                 }
 
                 @Override
-                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, Material material) {
+                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, @NotNull Material material) {
 
                 }
 
                 @Override
-                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, MaterialData material) {
+                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, @NotNull MaterialData material) {
 
                 }
 
                 @Override
-                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, BlockData blockData) {
+                public void setRegion(int xMin, int yMin, int zMin, int xMax, int yMax, int zMax, @NotNull BlockData blockData) {
 
                 }
 

@@ -1,67 +1,119 @@
 package me.definedoddy.fluidapi;
 
-import me.definedoddy.fluidapi.tasks.DelayedTask;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.EventExecutor;
+import org.bukkit.plugin.RegisteredListener;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FluidListener<T extends Event> implements Listener, EventExecutor {
-    private boolean active = true;
-    private int delay;
-    private Event event;
-    private int calls;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.*;
 
-    public FluidListener(Class<T> type) {
-        FluidPlugin.getPlugin().getServer().getPluginManager().registerEvent(type, this, EventPriority.NORMAL, this, FluidPlugin.getPlugin());
+public class FluidListener implements Listener, EventExecutor {
+    private boolean active = true;
+    private boolean registered;
+    private final HashMap<String, Method> toUnregister = new HashMap<>();
+
+    public FluidListener() {
+        registerFromAnnotations();
     }
 
     public void execute(@NotNull Listener listener, @NotNull Event event) {
-        this.event = event;
-        if (active) {
-            calls++;
-            if (delay > 0) {
-                new DelayedTask(delay) {
-                    @Override
-                    public void run() {
-                        FluidListener.this.run();
-                    }
-                };
-            } else {
-                run();
-            }
+        if (toUnregister.size() > 0 && containsListener(event)) {
+            event.getHandlers().unregister(this);
+            toUnregister.remove(event.getEventName().toLowerCase());
+        } else if (active) {
+            callEvent(event);
         }
     }
 
-    public abstract void run();
-
-    public T getData() {
-        return (T)event;
+    private boolean containsListener(Event event) {
+        for (RegisteredListener listener : event.getHandlers().getRegisteredListeners()) {
+            if (listener.getListener() == this) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public int getCalls() {
-        return calls;
-    }
-
-    public FluidListener<T> setActive(boolean active) {
+    public FluidListener setActive(boolean active) {
         this.active = active;
         return this;
     }
 
-    public FluidListener<T> setDelay(int delay) {
-        this.delay = delay;
-        return this;
+    public boolean isActive() {
+        return active;
     }
 
-    public FluidListener<T> unregister() {
-        event.getHandlers().unregister(this);
-        return this;
+    public boolean isRegistered() {
+        return registered;
     }
 
-    public static class Group implements Listener {
-        public Group() {
-            FluidPlugin.getPlugin().getServer().getPluginManager().registerEvents(this, FluidPlugin.getPlugin());
+    public void unregister() {
+        if (registered) {
+            registered = false;
+            for (Method method : getEventMethods().keySet()) {
+                toUnregister.put(method.getParameters()[0].getName().toLowerCase(), method);
+            }
+            Bukkit.broadcastMessage(toUnregister.toString());
         }
+    }
+
+    public void register() {
+        if (!registered) {
+            registerFromAnnotations();
+        }
+    }
+
+    private void registerFromAnnotations() {
+        for (Map.Entry<Method, Class<? extends Event>> entry : getEventMethods().entrySet()) {
+            EventData data = entry.getKey().getAnnotation(EventData.class);
+            EventPriority priority = data != null ? data.priority() : EventPriority.NORMAL;
+            FluidPlugin.getPlugin().getServer().getPluginManager().registerEvent(entry.getValue(), this, priority,
+                    this, FluidPlugin.getPlugin());
+        }
+        registered = true;
+    }
+
+    private HashMap<Method, Class<? extends Event>> getEventMethods() {
+        HashMap<Method, Class<? extends Event>> map = new HashMap<>();
+        for (Method method : getClass().getDeclaredMethods()) {
+            if (method.getParameterCount() > 0 && paramInstanceOf(method)) {
+                map.put(method, (Class<? extends Event>)method.getParameters()[0].getType());
+            }
+        }
+        return map;
+    };
+
+    private void callEvent(Event event) {
+        for (Method method : getClass().getDeclaredMethods()) {
+            if (method.getParameterCount() == 1 && paramInstanceOf(method)) {
+                EventData data = method.getAnnotation(EventData.class);
+                int delay = data != null ? data.delay() : 0;
+                if (delay > 0) {
+                    new FluidTask(() -> run(method, event)).run(delay);
+                } else run(method, event);
+            }
+        }
+    };
+
+    private void run(Method method, Event event) {
+        try {
+            if (Modifier.isStatic(method.getModifiers())) {
+                method.invoke(null, event);
+            } else {
+                method.invoke(FluidListener.this, event);
+            }
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean paramInstanceOf(Method method) {
+        return method.getGenericParameterTypes()[0].getClass().isInstance(Event.class);
     }
 }

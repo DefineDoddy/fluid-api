@@ -6,7 +6,7 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>pre-0.5.0</version>
+    <version>beta-0.6.2</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -18,9 +18,12 @@
         <resources>
             <resource>
                 <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
                 <excludes>
                     <!--<exclude>plugin.yml</exclude>-->
-                    <exclude>plugin.yml</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -32,7 +35,6 @@
                 <configuration>
                     <excludes>
                         <!--<exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>-->
-                        <exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>

@@ -28,7 +28,8 @@ public class FluidMessage {
     private TextComponent message;
     private Type type = Type.CHAT;
     private boolean usePrefix;
-    private String prefix = FluidPlugin.getChatPrefix();
+    private static String globalPrefix = "[" + FluidPlugin.getName() + "] ";
+    private String localPrefix = globalPrefix;
 
     public FluidMessage(String message) {
         this.message = new TextComponent(toColor(message));
@@ -105,7 +106,7 @@ public class FluidMessage {
                 }
             }
         } else {
-            console.sendMessage(message.getText());
+            console.sendMessage(usePrefix ? toColor(localPrefix) + message.getText() : message.getText());
         }
         return this;
     }
@@ -252,8 +253,20 @@ public class FluidMessage {
     }
 
     public FluidMessage setPrefix(String prefix) {
-        this.prefix = prefix;
+        this.localPrefix = prefix;
         return this;
+    }
+
+    public String getPrefix() {
+        return localPrefix;
+    }
+
+    public static void setDefaultPrefix(String prefix) {
+        FluidMessage.globalPrefix = prefix;
+    }
+
+    public static String getDefaultPrefix() {
+        return globalPrefix;
     }
 
     public enum Action {
@@ -281,15 +294,15 @@ public class FluidMessage {
     }
 
     public void logInfo(String message) {
-        logger.info(usePrefix ? (prefix + toColor(message)) : toColor(message));
+        logger.info(usePrefix ? (localPrefix + toColor(message)) : toColor(message));
     }
 
     public void logWarning(String message) {
-        logger.warning(usePrefix ? (prefix + toColor(message)) : toColor(message));
+        logger.warning(usePrefix ? (localPrefix + toColor(message)) : toColor(message));
     }
 
     public void logSevere(String message) {
-        logger.severe(usePrefix ? (prefix + toColor(message)) : toColor(message));
+        logger.severe(usePrefix ? (localPrefix + toColor(message)) : toColor(message));
     }
 
     public void runCmd(String command) {
@@ -326,7 +339,7 @@ public class FluidMessage {
 
         public void sendMessage(TextComponent message) {
             if (FluidMessage.this.usePrefix) {
-                TextComponent component = new TextComponent(toColor(prefix));
+                TextComponent component = new TextComponent(toColor(localPrefix));
                 component.addExtra(FluidMessage.this.message);
                 message = component;
             }

@@ -20,9 +20,9 @@ import java.util.List;
 public class FluidItem {
     private final ItemStack item;
     private final List<ListenerType> listenerTypes = new ArrayList<>();
-    private FluidListener<PlayerInteractEvent> interactListener;
-    private FluidListener<PlayerDropItemEvent> dropListener;
-    private FluidListener<PlayerPickupItemEvent> pickupListener;
+    private FluidListener interactListener;
+    private FluidListener dropListener;
+    private FluidListener pickupListener;
     private static int globalIdCount;
     private int id;
 
@@ -55,29 +55,26 @@ public class FluidItem {
         }
         for (ListenerType type : types) {
             if (type == ListenerType.INTERACT && interactListener == null) {
-                interactListener = new FluidListener<>(PlayerInteractEvent.class) {
-                    @Override
-                    public void run() {
-                        if (getData().getItem() != null && equalsIgnoreAmount(getData().getItem())) {
-                            onInteract(getData());
+                interactListener = new FluidListener() {
+                    public void interact(PlayerInteractEvent e) {
+                        if (e.getItem() != null && equalsIgnoreAmount(e.getItem())) {
+                            onInteract(e);
                         }
                     }
                 };
             } else if (type == ListenerType.DROP && dropListener == null) {
-                dropListener = new FluidListener<>(PlayerDropItemEvent.class) {
-                    @Override
-                    public void run() {
-                        if (equalsIgnoreAmount(getData().getItemDrop().getItemStack())) {
-                            onDrop(getData());
+                dropListener = new FluidListener() {
+                    public void drop(PlayerDropItemEvent e) {
+                        if (equalsIgnoreAmount(e.getItemDrop().getItemStack())) {
+                            onDrop(e);
                         }
                     }
                 };
             } else if (type == ListenerType.PICKUP && pickupListener == null) {
-                pickupListener = new FluidListener<>(PlayerPickupItemEvent.class) {
-                    @Override
-                    public void run() {
-                        if (equalsIgnoreAmount(getData().getItem().getItemStack())) {
-                            onPickup(getData());
+                pickupListener = new FluidListener() {
+                    public void pickup(PlayerPickupItemEvent e) {
+                        if (equalsIgnoreAmount(e.getItem().getItemStack())) {
+                            onPickup(e);
                         }
                     }
                 };

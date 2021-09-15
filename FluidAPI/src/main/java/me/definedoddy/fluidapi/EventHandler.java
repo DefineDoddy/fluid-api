@@ -16,8 +16,7 @@ class EventHandler {
     private static final Set<Player> prevPlayersOnGround = new HashSet<>();
 
     public static void init() {
-        new FluidListener.Group() {
-            @org.bukkit.event.EventHandler
+        new FluidListener() {
             public void playerMove(PlayerMoveEvent e) {
                 Player player = e.getPlayer();
                 if (player.getVelocity().getY() > 0) {

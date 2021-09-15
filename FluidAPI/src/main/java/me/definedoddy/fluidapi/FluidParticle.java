@@ -1,13 +1,12 @@
 package me.definedoddy.fluidapi;
 
-import me.definedoddy.fluidapi.tasks.CountingTask;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.util.Vector;
 
 public class FluidParticle {
-    private final Particle particle;
-    private final Location location;
+    private Particle particle;
+    private Location location;
     private int count = 1;
     private Vector offset;
 
@@ -22,12 +21,18 @@ public class FluidParticle {
     }
 
     public FluidParticle play(int ticks) {
-        new CountingTask(0, 1, ticks) {
-            @Override
-            public void run() {
-                location.getWorld().spawnParticle(particle, location, count, offset.getX(), offset.getY(), offset.getZ());
-            }
-        };
+        new FluidTask(() -> location.getWorld().spawnParticle(particle, location, count, offset.getX(), offset.getY(), offset.getZ()))
+                .repeat(0, 1, ticks);
+        return this;
+    }
+
+    public FluidParticle setParticle(Particle particle) {
+        this.particle = particle;
+        return this;
+    }
+
+    public FluidParticle setLocation(Location location) {
+        this.location = location;
         return this;
     }
 
@@ -38,6 +43,11 @@ public class FluidParticle {
 
     public FluidParticle setOffset(Vector offset) {
         this.offset = offset;
+        return this;
+    }
+
+    public FluidParticle setOffset(double x, double y, double z) {
+        this.offset = new Vector(x, y, z);
         return this;
     }
 }

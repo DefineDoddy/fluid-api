@@ -1,0 +1,21 @@
+- Completely overhauled the fluid listener. It is now the same as the old group subclass except you don't need to annotate each method with @EventHandler
+- You can now create separate delays and priorities for each event in a listener by using the @EventData method annotation
+- Completely redesigned the command system. Commands can now also be created through the @CommandHook method annotation
+- Completely overhauled the task system. You may now use one FluidTask class with the appropriate run methods and runnable method overrides
+- You can now create and manage holograms using the fluid hologram class
+- Cleaned up the fluid command class
+- Moved some non-server related utility methods to a new java utils class
+- Added some more handy methods to the util classes
+- Added set particle and location methods to fluid particle class
+- Removed chat prefix methods/constructor from fluid plugin class
+- Added global chat prefix methods to fluid message class
+- Chat prefix now has the default value: "[PLUGIN NAME] "
+- You no longer need to specify the plugin name when registering a plugin
+- You can now create a list of command arguments from a set of strings
+- Removed redundant type subclass in task classes
+- Removed redundant fill array methods in utils class
+- Renamed fluid group class to fluid team
+- Changed loot table builder class name to builder
+- Renamed get action type method in utils class to get action value to better match the return type
+- Fixed a bug where the plugin prefix wouldn't be displayed when a message was sent to the console
+- Probably a few other things so minuscule I forgot what they are
