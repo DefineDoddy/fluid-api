@@ -1,3 +1,2 @@
-- Fixed a bug stopping the FluidListener from working
-- Fixed a bug relating to the FluidCommand class
-- Added some new methods to the Group class
+- Fixed a bunch of issues relating to the FluidListener not working
+- Removed another accidental debug message

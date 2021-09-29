@@ -1,6 +1,5 @@
 package me.definedoddy.fluidapi;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,7 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FluidListener implements Listener, EventExecutor {
     private boolean active = true;
@@ -19,7 +19,11 @@ public class FluidListener implements Listener, EventExecutor {
     private final HashMap<String, Method> toUnregister = new HashMap<>();
 
     public FluidListener() {
-        Registry.listenerQueue.add(this);
+        if (FluidPlugin.getPlugin() == null) {
+            Registry.listenerQueue.add(this);
+        } else {
+            registerFromAnnotations();
+        }
     }
 
     public void execute(@NotNull Listener listener, @NotNull Event event) {
@@ -59,7 +63,6 @@ public class FluidListener implements Listener, EventExecutor {
             for (Method method : getEventMethods().keySet()) {
                 toUnregister.put(method.getParameters()[0].getName().toLowerCase(), method);
             }
-            Bukkit.broadcastMessage(toUnregister.toString());
         }
     }
 
@@ -91,7 +94,8 @@ public class FluidListener implements Listener, EventExecutor {
 
     private void callEvent(Event event) {
         for (Method method : getClass().getDeclaredMethods()) {
-            if (method.getParameterCount() == 1 && paramInstanceOf(method)) {
+            if (method.getParameterCount() == 1 && paramInstanceOf(method) &&
+                    method.getParameterTypes()[0].getSimpleName().equalsIgnoreCase(event.getEventName())) {
                 EventData data = method.getAnnotation(EventData.class);
                 int delay = data != null ? data.delay() : 0;
                 if (delay > 0) {
