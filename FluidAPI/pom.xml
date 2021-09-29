@@ -6,7 +6,7 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>beta-0.6.2</version>
+    <version>beta-0.6.3</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
@@ -23,7 +23,7 @@
                     <include>plugin.yml</include>
                 </includes>
                 <excludes>
-                    <!--<exclude>plugin.yml</exclude>-->
+                    <exclude>plugin.yml</exclude>
                 </excludes>
             </resource>
         </resources>
@@ -34,7 +34,7 @@
                 <version>3.8.1</version>
                 <configuration>
                     <excludes>
-                        <!--<exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>-->
+                        <exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
+            <version>22.0.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

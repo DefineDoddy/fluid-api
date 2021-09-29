@@ -19,7 +19,7 @@ public class FluidListener implements Listener, EventExecutor {
     private final HashMap<String, Method> toUnregister = new HashMap<>();
 
     public FluidListener() {
-        registerFromAnnotations();
+        Registry.listenerQueue.add(this);
     }
 
     public void execute(@NotNull Listener listener, @NotNull Event event) {
@@ -73,7 +73,7 @@ public class FluidListener implements Listener, EventExecutor {
         for (Map.Entry<Method, Class<? extends Event>> entry : getEventMethods().entrySet()) {
             EventData data = entry.getKey().getAnnotation(EventData.class);
             EventPriority priority = data != null ? data.priority() : EventPriority.NORMAL;
-            FluidPlugin.getPlugin().getServer().getPluginManager().registerEvent(entry.getValue(), this, priority,
+            FluidPlugin.getRawPlugin().getServer().getPluginManager().registerEvent(entry.getValue(), this, priority,
                     this, FluidPlugin.getPlugin());
         }
         registered = true;

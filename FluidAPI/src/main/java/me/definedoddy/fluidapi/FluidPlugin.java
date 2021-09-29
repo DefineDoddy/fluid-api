@@ -1,5 +1,6 @@
 package me.definedoddy.fluidapi;
 
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -29,12 +30,17 @@ public class FluidPlugin {
         FluidPlugin.name = name;
         EventHandler.init();
         FluidCommand.register(plugin);
+        Registry.register();
         if (showMessage) {
             new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name + " - " + getVersion()).send();
         }
     }
 
     public static JavaPlugin getPlugin() {
+        return plugin;
+    }
+
+    public static Plugin getRawPlugin() {
         return plugin;
     }
 

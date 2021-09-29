@@ -1,10 +1,6 @@
 package me.definedoddy.fluidapi;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +40,10 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
         }
         for (Method method : getHookMethods(CommandHook.class)) {
             CommandHook annotation = method.getAnnotation(CommandHook.class);
-            FluidPlugin.getPlugin().getCommand(annotation.value()).setExecutor(instance);
+            PluginCommand command = FluidPlugin.getPlugin().getCommand(annotation.value());
+            if (command != null) {
+                command.setExecutor(instance);
+            }
         }
     }
 
@@ -83,7 +82,6 @@ public abstract class FluidCommand implements CommandExecutor, TabCompleter {
         }
         for (Object arg : tabArgs) {
             if (arg instanceof CommandArgument argument) {
-                Bukkit.broadcastMessage("instance of argument");
                 if (args.length == argument.index) {
                     if (argument.parent != null) {
                         if (args[argument.index - 2].equalsIgnoreCase(argument.parent.name) && !argument.exclusions.contains((Player) sender)) {
