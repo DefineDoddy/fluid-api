@@ -6,12 +6,11 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
-    <version>beta-0.6.5</version>
+    <version>dev-testing</version>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
@@ -35,7 +34,16 @@
                 <configuration>
                     <excludes>
                         <exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>
+                        <exclude>**/me/definedoddy/fluidapi/legacy/</exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <source>16</source>
                 </configuration>
             </plugin>
         </plugins>
@@ -52,13 +60,13 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>22.0.0</version>
+            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

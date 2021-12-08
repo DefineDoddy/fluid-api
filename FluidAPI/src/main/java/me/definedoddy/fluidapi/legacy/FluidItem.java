@@ -1,7 +1,5 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.legacy;
 
-import me.definedoddy.fluidapi.legacy.FluidListener;
-import me.definedoddy.fluidapi.legacy.FluidPlugin;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -13,9 +11,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import me.definedoddy.fluidapi.legacy.FluidMessage;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -24,10 +19,10 @@ import java.util.List;
 
 public class FluidItem {
     private final ItemStack item;
-    private final List<FluidItem.ListenerType> listenerTypes = new ArrayList<>();
-    private me.definedoddy.fluidapi.legacy.FluidListener interactListener;
-    private me.definedoddy.fluidapi.legacy.FluidListener dropListener;
-    private me.definedoddy.fluidapi.legacy.FluidListener pickupListener;
+    private final List<ListenerType> listenerTypes = new ArrayList<>();
+    private FluidListener interactListener;
+    private FluidListener dropListener;
+    private FluidListener pickupListener;
     private static int globalIdCount;
     private int id;
 
@@ -48,34 +43,34 @@ public class FluidItem {
     }
 
     public FluidItem registerListeners() {
-        registerListeners(FluidItem.ListenerType.values());
+        registerListeners(ListenerType.values());
         return this;
     }
 
-    public FluidItem registerListeners(@NotNull FluidItem.ListenerType... types) {
+    public FluidItem registerListeners(@NotNull ListenerType... types) {
         if (equalsIgnoreAmount(new ItemStack(item.getType()))) {
             setData("fluid_item_event_" + globalIdCount, PersistentDataType.INTEGER, 1);
             id = globalIdCount;
             globalIdCount++;
         }
-        for (FluidItem.ListenerType type : types) {
-            if (type == FluidItem.ListenerType.INTERACT && interactListener == null) {
-                interactListener = new me.definedoddy.fluidapi.legacy.FluidListener() {
+        for (ListenerType type : types) {
+            if (type == ListenerType.INTERACT && interactListener == null) {
+                interactListener = new FluidListener() {
                     public void interact(PlayerInteractEvent e) {
                         if (e.getItem() != null && equalsIgnoreAmount(e.getItem())) {
                             onInteract(e);
                         }
                     }
                 };
-            } else if (type == FluidItem.ListenerType.DROP && dropListener == null) {
-                dropListener = new me.definedoddy.fluidapi.legacy.FluidListener() {
+            } else if (type == ListenerType.DROP && dropListener == null) {
+                dropListener = new FluidListener() {
                     public void drop(PlayerDropItemEvent e) {
                         if (equalsIgnoreAmount(e.getItemDrop().getItemStack())) {
                             onDrop(e);
                         }
                     }
                 };
-            } else if (type == FluidItem.ListenerType.PICKUP && pickupListener == null) {
+            } else if (type == ListenerType.PICKUP && pickupListener == null) {
                 pickupListener = new FluidListener() {
                     public void pickup(PlayerPickupItemEvent e) {
                         if (equalsIgnoreAmount(e.getItem().getItemStack())) {
@@ -89,19 +84,19 @@ public class FluidItem {
     }
 
     public FluidItem unregisterListeners() {
-        unregisterListeners(FluidItem.ListenerType.values());
+        unregisterListeners(ListenerType.values());
         return this;
     }
 
-    public FluidItem unregisterListeners(FluidItem.ListenerType... types) {
-        for (FluidItem.ListenerType type : types) {
-            if (type == FluidItem.ListenerType.INTERACT && interactListener != null) {
+    public FluidItem unregisterListeners(ListenerType... types) {
+        for (ListenerType type : types) {
+            if (type == ListenerType.INTERACT && interactListener != null) {
                 interactListener.unregister();
                 interactListener = null;
-            } else if (type == FluidItem.ListenerType.DROP && dropListener != null) {
+            } else if (type == ListenerType.DROP && dropListener != null) {
                 dropListener.unregister();
                 dropListener = null;
-            } else if (type == FluidItem.ListenerType.PICKUP && pickupListener != null) {
+            } else if (type == ListenerType.PICKUP && pickupListener != null) {
                 pickupListener.unregister();
                 pickupListener = null;
             }
@@ -232,12 +227,12 @@ public class FluidItem {
 
     public static <T, Z> Z getData(ItemStack item, String key, PersistentDataType<T, Z> type) {
         return hasData(item, key, type) ? item.getItemMeta().getPersistentDataContainer()
-                .get(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type) : null;
+                .get(new NamespacedKey(FluidPlugin.getPlugin(), key), type) : null;
     }
 
     public static <T, Z> ItemStack setData(ItemStack item, String key, PersistentDataType<T, Z> type, Z value) {
         ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type, value);
+        meta.getPersistentDataContainer().set(new NamespacedKey(FluidPlugin.getPlugin(), key), type, value);
         item.setItemMeta(meta);
         return item;
     }
@@ -246,12 +241,12 @@ public class FluidItem {
         if (item == null || item.getItemMeta() == null) {
             return false;
         }
-        return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type);
+        return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(FluidPlugin.getPlugin(), key), type);
     }
 
     public static ItemStack removeData(ItemStack item, String key) {
         ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().remove(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key));
+        meta.getPersistentDataContainer().remove(new NamespacedKey(FluidPlugin.getPlugin(), key));
         item.setItemMeta(meta);
         return item;
     }
@@ -422,7 +417,7 @@ public class FluidItem {
     }
 
     public static ItemStack addEnchantGlow(ItemStack item) {
-        return FluidItem.EnchantGlow.addToItem(item);
+        return EnchantGlow.addToItem(item);
     }
 
     private static class EnchantGlow extends Enchantment {
@@ -486,7 +481,7 @@ public class FluidItem {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            glow = new FluidItem.EnchantGlow(new NamespacedKey(FluidPlugin.getPlugin(), "Glow"));
+            glow = new EnchantGlow(new NamespacedKey(FluidPlugin.getPlugin(), "Glow"));
             Enchantment.registerEnchantment(glow);
             return glow;
         }

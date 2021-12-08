@@ -1,6 +1,5 @@
 package me.definedoddy.fluidapi;
 
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -8,52 +7,19 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 
-public class FluidPlugin {
-    private static JavaPlugin plugin;
-    private static String name;
-    private static int resourceId;
-
-    public static <T> void register(T plugin) {
-        register(plugin, ((JavaPlugin) plugin).getName(), true);
+/**The base class to extend from when registering a plugin*/
+public class FluidPlugin extends JavaPlugin {
+    /**@return the resource id of the plugin instance*/
+    public int getResourceId() {
+        return 0;
     }
 
-    public static <T> void register(T plugin, boolean showMessage) {
-        register(plugin, ((JavaPlugin) plugin).getName(), showMessage);
-    }
-
-    public static <T> void register(T plugin, String name) {
-        register(plugin, name, true);
-    }
-
-    public static <T> void register(T plugin, String name, boolean showMessage) {
-        FluidPlugin.plugin = (JavaPlugin) plugin;
-        FluidPlugin.name = name;
-        EventHandler.init();
-        FluidCommand.register(plugin);
-        Registry.register();
-        if (showMessage) {
-            new FluidMessage("&b[FluidAPI] &aSuccessfully registered " + name + " - " + getVersion()).send();
+    /**@return the latest version published to the plugin's spigot page. This page is determined by getResourceId()*/
+    public String getLatestVersion() throws Exception {
+        if (getResourceId() == 0) {
+            throw new Exception("Resource id not set");
         }
-    }
-
-    public static JavaPlugin getPlugin() {
-        return plugin;
-    }
-
-    public static Plugin getRawPlugin() {
-        return plugin;
-    }
-
-    public static String getName() {
-        return name;
-    }
-
-    public static void setResourceId(int id) {
-        resourceId = id;
-    }
-
-    public static String getLatestVersion() {
-        try (InputStream stream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + resourceId).openStream()) {
+        try (InputStream stream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + getResourceId()).openStream()) {
             Scanner scanner = new Scanner(stream);
             if (scanner.hasNext()) {
                 return scanner.next();
@@ -64,11 +30,8 @@ public class FluidPlugin {
         return null;
     }
 
-    public static String getVersion() {
-        return plugin.getDescription().getVersion();
-    }
-
-    public static boolean isLatestVersion() {
-        return getVersion().equalsIgnoreCase(getLatestVersion());
+    /**@return whether the current plugin version is the same as getLatestVersion()*/
+    public final boolean isLatestVersion() throws Exception {
+        return getDescription().getVersion().equalsIgnoreCase(getLatestVersion());
     }
 }

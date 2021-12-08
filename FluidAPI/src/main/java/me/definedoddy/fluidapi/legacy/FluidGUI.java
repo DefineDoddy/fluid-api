@@ -1,9 +1,8 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.legacy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -21,7 +20,7 @@ public class FluidGUI {
     private InventoryHolder owner;
     private Inventory inventory;
     private FluidListener listener;
-    private final Map<Integer, FluidGUI.Item> items = new HashMap<>();
+    private final Map<Integer, Item> items = new HashMap<>();
     private String title;
     private boolean canAddItems;
     private boolean canTakeItems;
@@ -41,7 +40,7 @@ public class FluidGUI {
             } else {
                 inventory = title == null ? Bukkit.createInventory(owner, size) : Bukkit.createInventory(owner, size, title);
             }
-            for (Map.Entry<Integer, FluidGUI.Item> item : items.entrySet()) {
+            for (Map.Entry<Integer, Item> item : items.entrySet()) {
                 inventory.setItem(item.getKey(), item.getValue().item);
             }
             initListeners();
@@ -74,8 +73,8 @@ public class FluidGUI {
         return this;
     }
 
-    public FluidGUI addItems(Map<Integer, FluidGUI.Item> items) {
-        for (Map.Entry<Integer, FluidGUI.Item> entry : items.entrySet()) {
+    public FluidGUI addItems(Map<Integer, Item> items) {
+        for (Map.Entry<Integer, Item> entry : items.entrySet()) {
             entry.getValue().gui = this;
             entry.getValue().slot = entry.getKey();
             this.items.put(entry.getKey(), entry.getValue());
@@ -101,8 +100,7 @@ public class FluidGUI {
 
     private void initListeners() {
         listener = new FluidListener() {
-            @EventHandler
-            public void onDrag(InventoryClickEvent e) {
+            public void drag(InventoryClickEvent e) {
                 if (e.getClickedInventory() == inventory) {
                     if (isNull(e.getCursor())) {
                         if (!e.isShiftClick() || !canTakeItems) {
@@ -111,7 +109,7 @@ public class FluidGUI {
                     } else if (!canAddItems) {
                         e.setCancelled(true);
                     }
-                    FluidGUI.Item item = items.get(e.getSlot());
+                    Item item = items.get(e.getSlot());
                     if (item != null) {
                         item.clickType = e.getClick();
                         item.shiftClick = e.isShiftClick();
@@ -125,8 +123,7 @@ public class FluidGUI {
                 }
             }
 
-            @EventHandler
-            public void onClick(InventoryDragEvent e) {
+            public void click(InventoryDragEvent e) {
                 Inventory inv = e.getView().getInventory(e.getRawSlots().stream().toList().get(0));
                 if (inv == inventory && !canAddItems) {
                     e.setCancelled(true);

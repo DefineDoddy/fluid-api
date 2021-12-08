@@ -1,0 +1,1 @@
+- Convert weighted random class to a more general random/picker class with an interface for the different entry types
