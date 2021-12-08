@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68b98c75-f41d-404c-a586-343f297d87d4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +41,7 @@
       <updated>1638961530074</updated>
       <workItem from="1638961534103" duration="40000" />
       <workItem from="1638961601134" duration="134000" />
-      <workItem from="1638961765123" duration="2401000" />
+      <workItem from="1638961765123" duration="2628000" />
     </task>
     <servers />
   </component>

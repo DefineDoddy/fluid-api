@@ -232,12 +232,12 @@ public class FluidItem {
 
     public static <T, Z> Z getData(ItemStack item, String key, PersistentDataType<T, Z> type) {
         return hasData(item, key, type) ? item.getItemMeta().getPersistentDataContainer()
-                .get(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type) : null;
+                .get(new NamespacedKey(FluidAPI.getPlugin(), key), type) : null;
     }
 
     public static <T, Z> ItemStack setData(ItemStack item, String key, PersistentDataType<T, Z> type, Z value) {
         ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().set(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type, value);
+        meta.getPersistentDataContainer().set(new NamespacedKey(FluidAPI.getPlugin(), key), type, value);
         item.setItemMeta(meta);
         return item;
     }
@@ -246,12 +246,12 @@ public class FluidItem {
         if (item == null || item.getItemMeta() == null) {
             return false;
         }
-        return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key), type);
+        return item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(FluidAPI.getPlugin(), key), type);
     }
 
     public static ItemStack removeData(ItemStack item, String key) {
         ItemMeta meta = item.getItemMeta();
-        meta.getPersistentDataContainer().remove(new NamespacedKey(me.definedoddy.fluidapi.legacy.FluidPlugin.getPlugin(), key));
+        meta.getPersistentDataContainer().remove(new NamespacedKey(FluidAPI.getPlugin(), key));
         item.setItemMeta(meta);
         return item;
     }
