@@ -1,5 +1,10 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.legacy;
 
+<<<<<<< Updated upstream:FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java
+=======
+import me.definedoddy.fluidapi.FluidTask;
+import me.definedoddy.fluidapi.legacy.utils.FluidUtils;
+>>>>>>> Stashed changes:FluidAPI/src/main/java/me/definedoddy/fluidapi/legacy/FluidSchematic.java
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -30,7 +35,6 @@ public class FluidSchematic {
     public FluidSchematic(Block point1, Block point2, String name) {
         this.name = name;
         file = new File(FluidPlugin.getPlugin().getDataFolder() + "/schematics/" + name + ".yml");
-
         int minX = Math.min(point1.getX(), point2.getX());
         int minZ = Math.min(point1.getZ(), point2.getZ());
         int minY = Math.min(point1.getY(), point2.getY());
@@ -159,10 +163,16 @@ public class FluidSchematic {
                 }
                 for (String z : blocksZ.getKeys(false)) {
                     String blockData = config.getString("blocks." + x + "." + y + "." + z);
+<<<<<<< Updated upstream:FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java
                     if (animType == AnimType.LAYER || animType == AnimType.STEP) {
                         new DelayedTask((long) count * interval) {
                             @Override
                             public void run() {
+=======
+                    if (getMaterial(blockData) != Material.SPAWNER) {
+                        if (animType == AnimType.LAYER || animType == AnimType.STEP) {
+                            new me.definedoddy.fluidapi.FluidTask(() -> {
+>>>>>>> Stashed changes:FluidAPI/src/main/java/me/definedoddy/fluidapi/legacy/FluidSchematic.java
                                 Location loc = location.clone().add(new Vector(Integer.parseInt(x), Integer.parseInt(y), Integer.parseInt(z)));
                                 placeBlock(blockData, loc);
                             }

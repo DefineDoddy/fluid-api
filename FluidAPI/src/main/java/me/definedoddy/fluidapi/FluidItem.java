@@ -1,5 +1,6 @@
 package me.definedoddy.fluidapi;
 
+<<<<<<< Updated upstream
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
@@ -8,12 +9,16 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+=======
+import me.definedoddy.fluidapi.legacy.FluidMessage;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+>>>>>>> Stashed changes
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FluidItem {
+<<<<<<< Updated upstream
     private ItemStack item;
 
     public FluidItem(Material material) {
@@ -150,6 +155,8 @@ public class FluidItem {
         return setLore(item, lore);
     }
 
+=======
+>>>>>>> Stashed changes
     public static ItemStack setName(ItemStack item, String name) {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(FluidMessage.toColor(name));
@@ -159,133 +166,11 @@ public class FluidItem {
 
     public static ItemStack setLore(ItemStack item, String... lore) {
         ItemMeta meta = item.getItemMeta();
-        List<String> colourLore = new ArrayList<>();
-        for (String string : lore) {
-            colourLore.add(FluidMessage.toColor(string));
-        }
-        meta.setLore(colourLore);
+        meta.setLore(List.of(FluidMessage.toColor(lore)));
         item.setItemMeta(meta);
         return item;
     }
-
-    public static ItemStack setLore(ItemStack item, int index, String lore) {
-        ItemMeta meta = item.getItemMeta();
-        List<String> list = meta.getLore();
-        if (list.size() - 1 >= index) {
-            list.set(index, FluidMessage.toColor(lore));
-        } else {
-            list.add(FluidMessage.toColor(lore));
-        }
-        meta.setLore(list);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack setLore(ItemStack item, int[] index, String... lore) {
-        ItemMeta meta = item.getItemMeta();
-        List<String> list = meta.getLore();
-        for (int i = 0; i < index.length; i++) {
-            if (list.size() - 1 >= index[i]) {
-                list.set(index[i], FluidMessage.toColor(lore[i]));
-            } else {
-                list.add(FluidMessage.toColor(lore[i]));
-            }
-        }
-        meta.setLore(list);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack addLore(ItemStack item, boolean allowDuplicates, String... lore) {
-        ItemMeta meta = item.getItemMeta();
-        List<String> colourLore = new ArrayList<>();
-        for (String string : lore) {
-            colourLore.add(FluidMessage.toColor(string));
-        }
-        if (meta.getLore() == null) {
-            meta.setLore(colourLore);
-        } else {
-            for (String newLine : colourLore) {
-                boolean matches = false;
-                if (!allowDuplicates) {
-                    for (String oldLine : meta.getLore()) {
-                        if (newLine.equalsIgnoreCase(oldLine)) {
-                            matches = true;
-                            break;
-                        }
-                    }
-                }
-                if (!matches) {
-                    List<String> list = meta.getLore();
-                    list.add(newLine);
-                    meta.setLore(list);
-                }
-            }
-        }
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack addLore(ItemStack item, String... lore) {
-        ItemMeta meta = item.getItemMeta();
-        List<String> colourLore = new ArrayList<>();
-        for (String string : lore) {
-            colourLore.add(FluidMessage.toColor(string));
-        }
-        if (meta.getLore() == null) {
-            meta.setLore(colourLore);
-        } else {
-            for (String newLine : colourLore) {
-                boolean matches = false;
-                for (String oldLine : meta.getLore()) {
-                    if (newLine.equalsIgnoreCase(oldLine)) {
-                        matches = true;
-                        break;
-                    }
-                }
-                if (!matches) {
-                    List<String> list = meta.getLore();
-                    list.add(newLine);
-                    meta.setLore(list);
-                }
-            }
-        }
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack setOtherMeta(ItemStack item, int customModelID, ItemFlag... flags) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(customModelID);
-        meta.addItemFlags(flags);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack setFlags(ItemStack item, ItemFlag... flags) {
-        ItemMeta meta = item.getItemMeta();
-        meta.addItemFlags(flags);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack setUnbreakable(ItemStack item) {
-        return setUnbreakable(item, true);
-    }
-
-    public static ItemStack setUnbreakable(ItemStack item, boolean unbreakable) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setUnbreakable(unbreakable);
-        item.setItemMeta(meta);
-        return item;
-    }
-
-    public static ItemStack setModel(ItemStack item, int customModelID) {
-        ItemMeta meta = item.getItemMeta();
-        meta.setCustomModelData(customModelID);
-        item.setItemMeta(meta);
-        return item;
-    }
+<<<<<<< Updated upstream
 
     public static ItemStack removeFlags(ItemStack item, ItemFlag... flags) {
         item.getItemMeta().removeItemFlags(flags);
@@ -379,4 +264,6 @@ public class FluidItem {
             return item;
         }
     }
+=======
+>>>>>>> Stashed changes
 }

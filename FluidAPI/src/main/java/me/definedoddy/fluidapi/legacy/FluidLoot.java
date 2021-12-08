@@ -1,5 +1,9 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.legacy;
 
+<<<<<<< Updated upstream:FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidLoot.java
+=======
+import me.definedoddy.fluidapi.legacy.utils.JavaUtils;
+>>>>>>> Stashed changes:FluidAPI/src/main/java/me/definedoddy/fluidapi/legacy/FluidLoot.java
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 

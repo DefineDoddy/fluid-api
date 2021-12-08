@@ -1,4 +1,4 @@
-package me.definedoddy.fluidapi;
+package me.definedoddy.fluidapi.legacy;
 
 import org.bukkit.configuration.Configuration;
 

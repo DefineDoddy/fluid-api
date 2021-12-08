@@ -1,0 +1,9 @@
+name: FluidTest
+version: '${project.version}'
+main: me.definedoddy.fluidapi.FluidTest
+api-version: 1.17
+authors: [ DefineDoddy ]
+description: A plugin to test out the fluid api
+commands:
+  gui:
+  hologram:

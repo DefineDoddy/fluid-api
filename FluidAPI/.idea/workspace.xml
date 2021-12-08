@@ -7,6 +7,7 @@
     <list default="true" id="e927c6fa-0241-410a-ae36-bbd198822542" name="Default Changelist" comment="more changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CountingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CountingTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/DelayedTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/DelayedTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBook.java" afterDir="false" />
@@ -16,6 +17,42 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/RepeatingTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/RepeatingTask.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/CommandArgument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/CommandHook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/CommandInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandTabHook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/CommandTabHook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/EventData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/EventData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/EventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/EventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBlock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidBlock.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidBook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidBook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidHead.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidHead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidHologram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidHologram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidLoot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidLoot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidParticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidParticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidRecipe.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidRecipe.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidRunnable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidSchematic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidSchematic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidTeam.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidTeam.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/Group.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/Group.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/Registry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/Registry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/TabInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/TabInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/events/PlayerJumpEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/events/PlayerJumpEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/utils/FluidUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/utils/FluidUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/utils/JavaUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/utils/JavaUtils.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +65,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+<<<<<<< Updated upstream
+=======
+        <option value="AnnotationType" />
+        <option value="Enum" />
+>>>>>>> Stashed changes
         <option value="Class" />
       </list>
     </option>
@@ -43,6 +85,16 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+<<<<<<< Updated upstream
+=======
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidMessage.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidPlugin.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidTest.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/FluidGUI.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy/utils/FluidUtils.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+>>>>>>> Stashed changes
   <component name="KotlinCodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
@@ -59,6 +111,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="extract.method.default.visibility" value="private" />
+<<<<<<< Updated upstream
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/io/github/definedoddy/fluidapi" />
     <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
     <property name="typescript.add.unambiguous.imports.on.the.fly" value="true" />
@@ -66,6 +119,32 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\java\io\github\definedoddy\fluidapi" />
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/legacy" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.29548088" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="typescript.add.unambiguous.imports.on.the.fly" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="me.definedoddy.fluidapi" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\java\me\definedoddy\fluidapi\legacy" />
+      <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\java\me\definedoddy\fluidapi" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\java\me\definedoddy\fluidapi" />
+      <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\java\me\definedoddy" />
+      <recent name="E:\Development\Minecraft\Plugins\fluid-api\FluidAPI\src\main\resources" />
+>>>>>>> Stashed changes
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.definedoddy.fluidapi" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -75,6 +154,7 @@
       <created>1628016592379</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
+<<<<<<< Updated upstream
       <updated>1628016592379</updated>
       <workItem from="1628016593718" duration="6684000" />
       <workItem from="1628104837196" duration="10185000" />
@@ -83,6 +163,60 @@
       <workItem from="1628174729686" duration="1157000" />
       <workItem from="1628178812162" duration="12509000" />
       <workItem from="1628274751884" duration="911000" />
+=======
+      <updated>1628335046848</updated>
+      <workItem from="1628335052564" duration="3299000" />
+      <workItem from="1628341836109" duration="13328000" />
+      <workItem from="1628422775747" duration="6267000" />
+      <workItem from="1628430512366" duration="2134000" />
+      <workItem from="1628432691594" duration="1841000" />
+      <workItem from="1628500177009" duration="16711000" />
+      <workItem from="1628602198563" duration="1783000" />
+      <workItem from="1628673599650" duration="89000" />
+      <workItem from="1628673710633" duration="8970000" />
+      <workItem from="1629042131323" duration="719000" />
+      <workItem from="1629042961206" duration="2262000" />
+      <workItem from="1629052847495" duration="46087000" />
+      <workItem from="1629205954971" duration="2950000" />
+      <workItem from="1629312061909" duration="16184000" />
+      <workItem from="1629574585232" duration="11558000" />
+      <workItem from="1629724991044" duration="23825000" />
+      <workItem from="1629831848099" duration="1005000" />
+      <workItem from="1629879548349" duration="595000" />
+      <workItem from="1629880888210" duration="1832000" />
+      <workItem from="1630570762151" duration="154000" />
+      <workItem from="1630571022020" duration="12523000" />
+      <workItem from="1630585901046" duration="19891000" />
+      <workItem from="1630760143587" duration="17215000" />
+      <workItem from="1630946715466" duration="30686000" />
+      <workItem from="1631694076814" duration="23944000" />
+      <workItem from="1631804679720" duration="2434000" />
+      <workItem from="1632844901691" duration="23000" />
+      <workItem from="1632845753581" duration="13000" />
+      <workItem from="1632845956368" duration="85000" />
+      <workItem from="1632846067188" duration="1659000" />
+      <workItem from="1632929029439" duration="2319000" />
+      <workItem from="1632932390855" duration="1307000" />
+      <workItem from="1632934934209" duration="13000" />
+      <workItem from="1632937353251" duration="4029000" />
+      <workItem from="1632941721742" duration="849000" />
+      <workItem from="1633460006959" duration="2089000" />
+      <workItem from="1633513392442" duration="16533000" />
+      <workItem from="1633617757800" duration="5978000" />
+      <workItem from="1633700953650" duration="10696000" />
+      <workItem from="1633940578630" duration="15891000" />
+      <workItem from="1634388742695" duration="605000" />
+      <workItem from="1634389475348" duration="1770000" />
+      <workItem from="1634391488391" duration="691000" />
+      <workItem from="1634392242381" duration="721000" />
+      <workItem from="1635680064565" duration="3257000" />
+      <workItem from="1635707254230" duration="1968000" />
+      <workItem from="1635793153374" duration="8896000" />
+      <workItem from="1637869086464" duration="35000" />
+      <workItem from="1638906829564" duration="56000" />
+      <workItem from="1638906955528" duration="3115000" />
+      <workItem from="1638954325274" duration="5087000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>

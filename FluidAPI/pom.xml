@@ -6,13 +6,56 @@
 
     <groupId>me.definedoddy</groupId>
     <artifactId>FluidAPI</artifactId>
+<<<<<<< Updated upstream
     <version>pre-0.2.8</version>
+=======
+    <version>pre-0.1.00</version>
+>>>>>>> Stashed changes
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
 
+<<<<<<< Updated upstream
+=======
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>plugin.yml</include>
+                </includes>
+                <excludes>
+                    <exclude>plugin.yml</exclude>
+                </excludes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/me/definedoddy/fluidapi/FluidTest.java</exclude>
+                        <exclude>**/me/definedoddy/fluidapi/legacy/</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <source>16</source>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+>>>>>>> Stashed changes
     <repositories>
         <repository>
             <id>spigot-repo</id>
@@ -24,7 +67,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
