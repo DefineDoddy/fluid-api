@@ -12,4 +12,5 @@ buildNumber.properties
 .idea/
 .iml
 FluidAPI/src/main/java/me/definedoddy/fluidapi/FluidTest.java
+FluidAPI/src/main/java/me/definedoddy/fluidapi/legacy
 FluidAPI/src/main/resources/plugin.yml
