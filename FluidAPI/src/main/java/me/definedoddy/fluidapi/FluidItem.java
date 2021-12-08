@@ -1,11 +1,10 @@
 package me.definedoddy.fluidapi;
 
-import me.definedoddy.fluidapi.legacy.FluidListener;
-import me.definedoddy.fluidapi.legacy.FluidPlugin;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -13,9 +12,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import me.definedoddy.fluidapi.legacy.FluidMessage;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import me.definedoddy.fluidapi.FluidMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -25,9 +22,9 @@ import java.util.List;
 public class FluidItem {
     private final ItemStack item;
     private final List<FluidItem.ListenerType> listenerTypes = new ArrayList<>();
-    private me.definedoddy.fluidapi.legacy.FluidListener interactListener;
-    private me.definedoddy.fluidapi.legacy.FluidListener dropListener;
-    private me.definedoddy.fluidapi.legacy.FluidListener pickupListener;
+    private FluidListener interactListener;
+    private FluidListener dropListener;
+    private FluidListener pickupListener;
     private static int globalIdCount;
     private int id;
 
@@ -60,16 +57,18 @@ public class FluidItem {
         }
         for (FluidItem.ListenerType type : types) {
             if (type == FluidItem.ListenerType.INTERACT && interactListener == null) {
-                interactListener = new me.definedoddy.fluidapi.legacy.FluidListener() {
-                    public void interact(PlayerInteractEvent e) {
+                interactListener = new FluidListener() {
+                    @EventHandler
+                    public void onInteract(PlayerInteractEvent e) {
                         if (e.getItem() != null && equalsIgnoreAmount(e.getItem())) {
                             onInteract(e);
                         }
                     }
                 };
             } else if (type == FluidItem.ListenerType.DROP && dropListener == null) {
-                dropListener = new me.definedoddy.fluidapi.legacy.FluidListener() {
-                    public void drop(PlayerDropItemEvent e) {
+                dropListener = new FluidListener() {
+                    @EventHandler
+                    public void onDrop(PlayerDropItemEvent e) {
                         if (equalsIgnoreAmount(e.getItemDrop().getItemStack())) {
                             onDrop(e);
                         }
@@ -77,7 +76,8 @@ public class FluidItem {
                 };
             } else if (type == FluidItem.ListenerType.PICKUP && pickupListener == null) {
                 pickupListener = new FluidListener() {
-                    public void pickup(PlayerPickupItemEvent e) {
+                    @EventHandler
+                    public void onPickup(PlayerPickupItemEvent e) {
                         if (equalsIgnoreAmount(e.getItem().getItemStack())) {
                             onPickup(e);
                         }
@@ -486,7 +486,7 @@ public class FluidItem {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            glow = new FluidItem.EnchantGlow(new NamespacedKey(FluidPlugin.getPlugin(), "Glow"));
+            glow = new FluidItem.EnchantGlow(new NamespacedKey(FluidAPI.getPlugin(), "Glow"));
             Enchantment.registerEnchantment(glow);
             return glow;
         }
