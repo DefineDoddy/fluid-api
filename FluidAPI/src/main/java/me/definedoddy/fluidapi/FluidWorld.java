@@ -7,9 +7,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FluidWorld<T> {
+public class FluidWorld {
     private World world;
-    private String name;
+    private final String name;
     private World.Environment environment;
     private WorldType type;
     private String generation;
@@ -17,74 +17,65 @@ public class FluidWorld<T> {
     private boolean hasSeed;
     private boolean allowAnimals = true;
     private boolean allowMonsters = true;
-    private final Map<GameRule<T>, T> gameRules = new HashMap<>();
+    private final Map<GameRule<?>, Object> gameRules = new HashMap<>();
     private Difficulty difficulty = Difficulty.NORMAL;
 
     public FluidWorld(String name) {
         this.name = name;
     }
 
-    public FluidWorld<T> name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public FluidWorld<T> environment(World.Environment environment) {
+    public FluidWorld environment(World.Environment environment) {
         this.environment = environment;
         return this;
     }
 
-    public FluidWorld<T> type(WorldType type) {
+    public FluidWorld type(WorldType type) {
         this.type = type;
         return this;
     }
 
-    public FluidWorld<T> generation(String generation) {
+    public FluidWorld generation(String generation) {
         this.generation = generation;
         return this;
     }
 
-    public FluidWorld<T> seed(long seed) {
+    public FluidWorld seed(long seed) {
         this.seed = seed;
         hasSeed = true;
         return this;
     }
 
-    public FluidWorld<T> animals(boolean allowAnimals) {
+    public FluidWorld animals(boolean allowAnimals) {
         this.allowAnimals = allowAnimals;
         return this;
     }
 
-    public FluidWorld<T> monsters(boolean allowMonsters) {
+    public FluidWorld monsters(boolean allowMonsters) {
         this.allowMonsters = allowMonsters;
         return this;
     }
 
-    public FluidWorld<T> gamerule(GameRule<T> gameRule, T value) {
+    public FluidWorld gameRule(GameRule<?> gameRule, Object value) {
         gameRules.put(gameRule, value);
         return this;
     }
 
-    public FluidWorld<T> difficulty(Difficulty difficulty) {
+    public FluidWorld difficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
         return this;
     }
 
-    public FluidWorld<T> create() {
+    public <T> FluidWorld create() {
         new FluidTask(() -> {
             WorldCreator wc = new WorldCreator(name);
             wc.environment(environment == null ? World.Environment.NORMAL : environment);
             wc.type(type == null ? WorldType.NORMAL : type);
-            if (generation != null) {
-                wc.generator(generation);
-            }
-            if (hasSeed) {
-                wc.seed(seed);
-            }
+            if (generation != null) wc.generator(generation);
+            if (hasSeed) wc.seed(seed);
             world = wc.createWorld();
             world.setSpawnFlags(allowMonsters, allowAnimals);
-            for (Map.Entry<GameRule<T>, T> rule : gameRules.entrySet()) {
-                world.setGameRule(rule.getKey(), rule.getValue());
+            for (Map.Entry<GameRule<?>, ?> rule : gameRules.entrySet()) {
+                world.setGameRule((GameRule<T>)rule.getKey(), (T)rule.getValue());
             }
             world.setDifficulty(difficulty);
         }).async().run().onComplete(() -> onWorldCreated(world));

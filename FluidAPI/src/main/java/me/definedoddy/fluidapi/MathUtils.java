@@ -40,7 +40,29 @@ public class MathUtils {
         return Math.max(Math.min(value, max), min);
     }
 
-    public static double distance(double x1, double x2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2));
+    public static double difference(double x1, double x2) {
+        return Math.abs(x2 - x1);
+    }
+
+    public static int[] getPrimeNumbers(int max) {
+        int[] primes = new int[max];
+        int i = 0;
+        for (int n = 2; n <= max; n++) {
+            if (isPrime(n)) {
+                primes[i] = n;
+                i++;
+            }
+        }
+        return primes;
+    }
+
+    public static boolean isPrime(int n) {
+        if (n <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }

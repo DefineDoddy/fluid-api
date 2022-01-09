@@ -180,7 +180,7 @@ public class FluidMessage implements MessageBase {
                 player.sendTitle(title, subtitle, in, stay, out);
             }
             if (onFinish != null) {
-                new FluidTask(onFinish).run(in + stay + out);
+                new FluidTask((TaskRunnable) onFinish).run(in + stay + out);
             }
             return this;
         }
@@ -244,7 +244,7 @@ public class FluidMessage implements MessageBase {
                 sendMessage();
             }
             if (onFinish != null) {
-                new FluidTask(onFinish).run(stay + 20);
+                new FluidTask((TaskRunnable) onFinish).run(stay + 20);
             }
             return this;
         }

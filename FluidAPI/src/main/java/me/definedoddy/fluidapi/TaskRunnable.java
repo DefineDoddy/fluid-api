@@ -7,13 +7,9 @@ public interface TaskRunnable extends Runnable {
         task.cancel();
     }
 
-    default void onCancel() {
-        task.onCancel(this);
-    }
+    default void onCancel() {};
 
-    default void onComplete() {
-        task.onComplete(this);
-    }
+    default void onComplete() {};
 
     default int getIteration() {
         return task.getCurrentTask().currentLoop;

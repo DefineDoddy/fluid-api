@@ -3,10 +3,10 @@ package me.definedoddy.fluidapi;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeightedRandom {
+public class FluidRandom {
     private final List<WeightedEntry> entries;
 
-    public WeightedRandom(WeightedEntry entries) {
+    public FluidRandom(WeightedEntry entries) {
         this.entries = new ArrayList<>(List.of(entries));
         build();
     }

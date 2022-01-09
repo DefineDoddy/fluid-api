@@ -13,10 +13,6 @@ public class FluidTask {
         runners.add(new Runner(runnable));
     }
 
-    public FluidTask(Runnable runnable) {
-        runners.add(new Runner(runnable));
-    }
-
 /*    public FluidTask chain(TaskRunnable runnable) {
         runners.add(new Runner(runnable));
         return this;
@@ -79,21 +75,13 @@ public class FluidTask {
 
     public FluidTask onComplete(TaskRunnable runnable) {
         runner().onComplete = runnable;
-        return this;
-    }
-
-    public FluidTask onComplete(Runnable runnable) {
-        runner().onComplete = runnable::run;
+        runner().runnable.onComplete();
         return this;
     }
 
     public FluidTask onCancel(TaskRunnable runnable) {
         runner().onCancel = runnable;
-        return this;
-    }
-
-    public FluidTask onCancel(Runnable runnable) {
-        runner().onCancel = runnable::run;
+        runner().runnable.onCancel();
         return this;
     }
 
@@ -167,10 +155,6 @@ public class FluidTask {
 
         public Runner(TaskRunnable runnable) {
             this.runnable = runnable;
-        }
-
-        public Runner(Runnable runnable) {
-            this.runnable = runnable::run;
         }
     }
 }

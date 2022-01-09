@@ -1,10 +1,10 @@
 package me.definedoddy.fluidapi;
 
 public class WeightedEntry {
+    FluidRandom random;
     final Object item;
     int weight = 1;
     double chance = 1;
-    WeightedRandom random;
 
     public WeightedEntry(Object item) {
         this.item = item;
