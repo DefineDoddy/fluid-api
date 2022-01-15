@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68b98c75-f41d-404c-a586-343f297d87d4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandArgument.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/BukkitUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/BukkitUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidWorld.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidWorld.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/MathUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/TaskRunnable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/TaskRunnable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/WeightedEntry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/WeightedEntry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/WeightedRandom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidRandom.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -74,7 +69,9 @@
       <workItem from="1638961765123" duration="3225000" />
       <workItem from="1639156467133" duration="660000" />
       <workItem from="1641736410849" duration="2462000" />
-      <workItem from="1641748842011" duration="5540000" />
+      <workItem from="1641748842011" duration="9191000" />
+      <workItem from="1642005854228" duration="2416000" />
+      <workItem from="1642252010120" duration="1135000" />
     </task>
     <servers />
   </component>
