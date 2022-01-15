@@ -6,49 +6,49 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CommandArgument {
+public class CommandArg {
     final String name;
     int index;
-    CommandArgument parent;
+    CommandArg parent;
     List<Player> exclusions = new ArrayList<>();
 
-    public CommandArgument(String name, int index) {
+    public CommandArg(String name, int index) {
         this.name = name;
         this.index = index;
     }
 
-    public CommandArgument(String name, CommandArgument parent) {
+    public CommandArg(String name, CommandArg parent) {
         this.name = name;
         this.parent = parent;
         this.index = parent.index + 1;
     }
 
-    public CommandArgument setIndex(int index) {
+    public CommandArg setIndex(int index) {
         this.index = index;
         return this;
     }
 
-    public CommandArgument setParent(CommandArgument parent) {
+    public CommandArg setParent(CommandArg parent) {
         this.parent = parent;
         return this;
     }
 
-    public CommandArgument removeParent() {
+    public CommandArg removeParent() {
         this.parent = null;
         return this;
     }
 
-    public CommandArgument setExclusions(List<Player> exclusions) {
+    public CommandArg setExclusions(List<Player> exclusions) {
         this.exclusions = exclusions;
         return this;
     }
 
-    public CommandArgument addExclusions(Player... exclusions) {
+    public CommandArg addExclusions(Player... exclusions) {
         this.exclusions.addAll(Arrays.asList(exclusions));
         return this;
     }
 
-    public CommandArgument removeExclusions(Player... exclusions) {
+    public CommandArg removeExclusions(Player... exclusions) {
         this.exclusions.removeAll(Arrays.asList(exclusions));
         return this;
     }
@@ -61,39 +61,39 @@ public class CommandArgument {
         return index;
     }
 
-    public CommandArgument getParent() {
+    public CommandArg getParent() {
         return parent;
     }
 
-    public static List<CommandArgument> from(List<String> args) {
+    public static List<CommandArg> from(List<String> args) {
         return from(1, args);
     }
 
-    public static List<CommandArgument> from(String... args) {
+    public static List<CommandArg> from(String... args) {
         return from(1, List.of(args));
     }
 
-    public static List<CommandArgument> from(int index, List<String> args) {
-        List<CommandArgument> list = new ArrayList<>();
+    public static List<CommandArg> from(int index, List<String> args) {
+        List<CommandArg> list = new ArrayList<>();
         for (String arg : args) {
-            list.add(new CommandArgument(arg, index));
+            list.add(new CommandArg(arg, index));
         }
         return list;
     }
 
-    public static List<CommandArgument> from(int index, String... args) {
+    public static List<CommandArg> from(int index, String... args) {
         return from(index, List.of(args));
     }
 
-    public static List<CommandArgument> from(CommandArgument parent, List<String> args) {
-        List<CommandArgument> list = new ArrayList<>();
+    public static List<CommandArg> from(CommandArg parent, List<String> args) {
+        List<CommandArg> list = new ArrayList<>();
         for (String arg : args) {
-            list.add(new CommandArgument(arg, parent));
+            list.add(new CommandArg(arg, parent));
         }
         return list;
     }
 
-    public static List<CommandArgument> from(CommandArgument parent, String... args) {
+    public static List<CommandArg> from(CommandArg parent, String... args) {
         return from(parent, List.of(args));
     }
 }
