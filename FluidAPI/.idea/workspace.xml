@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="68b98c75-f41d-404c-a586-343f297d87d4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandArgument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/CommandArg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/definedoddy/fluidapi/FluidItem.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +73,8 @@
       <workItem from="1641748842011" duration="9191000" />
       <workItem from="1642005854228" duration="2416000" />
       <workItem from="1642252010120" duration="1241000" />
-      <workItem from="1642253624725" duration="64000" />
+      <workItem from="1642253624725" duration="92000" />
+      <workItem from="1642255816849" duration="487000" />
     </task>
     <servers />
   </component>

@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -11,8 +12,8 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
-import me.definedoddy.fluidapi.FluidMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FluidItem {
-    private final ItemStack item;
+    final ItemStack item;
     private final List<FluidItem.ListenerType> listenerTypes = new ArrayList<>();
     private FluidListener interactListener;
     private FluidListener dropListener;
@@ -505,6 +506,32 @@ public class FluidItem {
                 item.removeEnchantment(glow);
             }
             return item;
+        }
+    }
+
+    public static class Head extends FluidItem {
+        public Head(String owner) {
+            super(Material.PLAYER_HEAD);
+            setOwner(owner);
+        }
+
+        public Head(Player owner) {
+            super(Material.PLAYER_HEAD);
+            setOwner(owner);
+        }
+
+        public Head setOwner(String owner) {
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+            meta.setOwner(owner);
+            item.setItemMeta(meta);
+            return this;
+        }
+
+        public Head setOwner(Player owner) {
+            SkullMeta meta = (SkullMeta) item.getItemMeta();
+            meta.setOwningPlayer(owner);
+            item.setItemMeta(meta);
+            return this;
         }
     }
 }
