@@ -51,6 +51,7 @@ public class FluidGUI {
             player.closeInventory();
         }
         listener.unregister();
+        listener = null;
     }
 
     public void open() {
