@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 
 public class FluidGUI {
     private final Inventory inventory;
-    private final Player[] players;
+    private final List<Player> players;
     private FluidListener listener;
 
     private final List<Item> items;
@@ -27,7 +27,7 @@ public class FluidGUI {
     private final Consumer<InventoryDragEvent> dragEvent;
     private final Consumer<InventoryCloseEvent> closeEvent;
 
-    FluidGUI(Player[] players, String title, int size, List<Item> items, boolean preventClosing, boolean canTakeItems, boolean canAddItems,
+    FluidGUI(List<Player> players, String title, int size, List<Item> items, boolean preventClosing, boolean canTakeItems, boolean canAddItems,
              Consumer<InventoryClickEvent> clickEvent, Consumer<InventoryDragEvent> dragEvent, Consumer<InventoryCloseEvent> closeEvent) {
         this.players = players;
         this.items = items;
@@ -57,10 +57,22 @@ public class FluidGUI {
         for (Player player : players) {
             player.openInventory(inventory);
         }
-        initListeners();
+        if (listener == null) {
+            initListeners();
+        }
     }
 
-    public void initListeners() {
+    public void open(Player... players) {
+        for (Player player : players) {
+            this.players.add(player);
+            player.openInventory(inventory);
+        }
+        if (listener == null) {
+            initListeners();
+        }
+    }
+
+    void initListeners() {
         listener = new FluidListener() {
             @EventHandler
             public void onClick(InventoryClickEvent e) {
@@ -175,17 +187,16 @@ public class FluidGUI {
         }
 
         public FluidGUI build() {
-            return new FluidGUI(null, title, size, items, preventClosing, canTakeItems,
+            return new FluidGUI(new ArrayList<>(), title, size, items, preventClosing, canTakeItems,
                     canAddItems, clickEvent, dragEvent, closeEvent);
         }
 
-        public FluidGUI open(Player... players) {
-            FluidGUI gui = new FluidGUI(players, title, size, items, preventClosing, canTakeItems,
+        public void open(Player... players) {
+            FluidGUI gui = new FluidGUI(List.of(players), title, size, items, preventClosing, canTakeItems,
                     canAddItems, clickEvent, dragEvent, closeEvent);
             for (Player player : players) {
                 player.openInventory(gui.inventory);
             }
-            return gui;
         }
     }
 
