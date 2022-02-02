@@ -1,191 +1,246 @@
 package me.definedoddy.fluidapi;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class FluidGUI {
-    private InventoryType type;
-    private int size;
-    private InventoryHolder owner;
-    private Inventory inventory;
+    private final Inventory inventory;
+    private final Player[] players;
     private FluidListener listener;
-    private final Map<Integer, FluidGUI.Item> items = new HashMap<>();
-    private String title;
-    private boolean canAddItems;
-    private boolean canTakeItems;
 
-    public FluidGUI(InventoryType type) {
-        this.type = type;
-    }
+    private final List<Item> items;
+    private final boolean preventClosing;
+    private final boolean canTakeItems;
+    private final boolean canAddItems;
 
-    public FluidGUI(int size) {
-        this.size = getSize(size);
-    }
+    private final Consumer<InventoryClickEvent> clickEvent;
+    private final Consumer<InventoryDragEvent> dragEvent;
+    private final Consumer<InventoryCloseEvent> closeEvent;
 
-    public Inventory build() {
-        if (inventory == null) {
-            if (type != null) {
-                inventory = title == null ? Bukkit.createInventory(owner, type) : Bukkit.createInventory(owner, type, title);
-            } else {
-                inventory = title == null ? Bukkit.createInventory(owner, size) : Bukkit.createInventory(owner, size, title);
-            }
-            for (Map.Entry<Integer, FluidGUI.Item> item : items.entrySet()) {
-                inventory.setItem(item.getKey(), item.getValue().item);
-            }
-            initListeners();
-        }
-        return inventory;
-    }
-
-    public FluidGUI setOwner(InventoryHolder owner) {
-        this.owner = owner;
-        return this;
-    }
-
-    public FluidGUI canAddItems() {
-        setCanAddItems(true);
-        return this;
-    }
-
-    public FluidGUI setCanAddItems(boolean canAddItems) {
-        this.canAddItems = canAddItems;
-        return this;
-    }
-
-    public FluidGUI canTakeItems() {
-        setCanTakeItems(true);
-        return this;
-    }
-
-    public FluidGUI setCanTakeItems(boolean canTakeItems) {
+    FluidGUI(Player[] players, String title, int size, List<Item> items, boolean preventClosing, boolean canTakeItems, boolean canAddItems,
+             Consumer<InventoryClickEvent> clickEvent, Consumer<InventoryDragEvent> dragEvent, Consumer<InventoryCloseEvent> closeEvent) {
+        this.players = players;
+        this.items = items;
+        this.preventClosing = preventClosing;
+        this.clickEvent = clickEvent;
+        this.dragEvent = dragEvent;
+        this.closeEvent = closeEvent;
         this.canTakeItems = canTakeItems;
-        return this;
+        this.canAddItems = canAddItems;
+
+        inventory = Bukkit.createInventory(null, size, title);
+        items.forEach(item -> {
+            item.gui = this;
+            inventory.setItem(item.slot, item.stack);
+        });
+        initListeners();
     }
 
-    public FluidGUI addItems(Map<Integer, FluidGUI.Item> items) {
-        for (Map.Entry<Integer, FluidGUI.Item> entry : items.entrySet()) {
-            entry.getValue().gui = this;
-            entry.getValue().slot = entry.getKey();
-            this.items.put(entry.getKey(), entry.getValue());
+    public void close() {
+        for (Player player : players) {
+            player.closeInventory();
         }
-        return this;
+        listener.unregister();
     }
 
-    public FluidGUI setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public FluidGUI unregister() {
-        if (listener != null) {
-            listener.unregister();
+    public void open() {
+        for (Player player : players) {
+            player.openInventory(inventory);
         }
-        return this;
+        initListeners();
     }
 
-    private int getSize(int size) {
-        return Math.max(9, 9 * (Math.round(size / 9f)));
-    }
-
-    private void initListeners() {
+    public void initListeners() {
         listener = new FluidListener() {
             @EventHandler
-            public void onDrag(InventoryClickEvent e) {
+            public void onClick(InventoryClickEvent e) {
                 if (e.getClickedInventory() == inventory) {
-                    if (isNull(e.getCursor())) {
+                    if (clickEvent != null) {
+                        clickEvent.accept(e);
+                    }
+                    for (Item item : items) {
+                        if (item.slot == e.getSlot()) {
+                            item.clickEvent.accept(new Item.ClickEvent((Player)e.getWhoClicked(),
+                                    e.getClick(), e.getSlotType(), e.getAction()), item);
+                        }
+                    }
+
+                    if (FluidItem.isNull(e.getCursor())) {
                         if (!e.isShiftClick() || !canTakeItems) {
                             e.setCancelled(true);
                         }
                     } else if (!canAddItems) {
                         e.setCancelled(true);
                     }
-                    FluidGUI.Item item = items.get(e.getSlot());
-                    if (item != null) {
-                        item.clickType = e.getClick();
-                        item.shiftClick = e.isShiftClick();
-                        item.clicker = (Player) e.getWhoClicked();
-                        item.internalClick();
-                        item.onClick();
-                    }
                 } else if (e.getView().getTopInventory() == inventory &&
-                        !isNull(e.getCurrentItem()) && e.isShiftClick() && !canAddItems) {
+                        !FluidItem.isNull(e.getCurrentItem()) && e.isShiftClick() && !canAddItems) {
                     e.setCancelled(true);
                 }
             }
 
             @EventHandler
-            public void onClick(InventoryDragEvent e) {
+            public void onDrag(InventoryDragEvent e) {
                 Inventory inv = e.getView().getInventory(e.getRawSlots().stream().toList().get(0));
-                if (inv == inventory && !canAddItems) {
-                    e.setCancelled(true);
+                if (inv == inventory) {
+                    if (!canAddItems) {
+                        e.setCancelled(true);
+                    }
+                    if (dragEvent != null) {
+                        dragEvent.accept(e);
+                    }
+                }
+            }
+
+            @EventHandler
+            public void onClose(InventoryCloseEvent e) {
+                if (e.getInventory() == inventory) {
+                    if (preventClosing) {
+                        e.getPlayer().openInventory(inventory);
+                    } else {
+                        if (closeEvent != null) {
+                            closeEvent.accept(e);
+                        }
+                        unregister();
+                    }
                 }
             }
         };
     }
 
-    private boolean isNull(ItemStack item) {
-        return item == null || item.getType() == Material.AIR;
+    public static class Builder {
+        private String title = "Custom GUI";
+        private int size = 27;
+        private final List<Item> items = new ArrayList<>();
+        private boolean preventClosing;
+        private boolean canTakeItems;
+        private boolean canAddItems;
+
+        private Consumer<InventoryClickEvent> clickEvent;
+        private Consumer<InventoryDragEvent> dragEvent;
+        private Consumer<InventoryCloseEvent> closeEvent;
+
+        public Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder size(int size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder items(Item... items) {
+            this.items.addAll(Arrays.asList(items));
+            return this;
+        }
+
+        public Builder onClick(Consumer<InventoryClickEvent> clickEvent) {
+            this.clickEvent = clickEvent;
+            return this;
+        }
+
+        public Builder onDrag(Consumer<InventoryDragEvent> dragEvent) {
+            this.dragEvent = dragEvent;
+            return this;
+        }
+
+        public Builder onClose(Consumer<InventoryCloseEvent> closeEvent) {
+            this.closeEvent = closeEvent;
+            return this;
+        }
+
+        public Builder preventClosing() {
+            preventClosing = true;
+            return this;
+        }
+
+        public Builder canTakeItems() {
+            canTakeItems = true;
+            return this;
+        }
+
+        public Builder canAddItems() {
+            canAddItems = true;
+            return this;
+        }
+
+        public FluidGUI build() {
+            return new FluidGUI(null, title, size, items, preventClosing, canTakeItems,
+                    canAddItems, clickEvent, dragEvent, closeEvent);
+        }
+
+        public FluidGUI open(Player... players) {
+            FluidGUI gui = new FluidGUI(players, title, size, items, preventClosing, canTakeItems,
+                    canAddItems, clickEvent, dragEvent, closeEvent);
+            for (Player player : players) {
+                player.openInventory(gui.inventory);
+            }
+            return gui;
+        }
     }
 
     public static class Item {
-        private final ItemStack item;
-        private int slot;
-        private FluidGUI gui;
-        private ClickType clickType;
-        private boolean shiftClick;
-        private Player clicker;
+        FluidGUI gui;
+        private final ItemStack stack;
+        BiConsumer<ClickEvent, Item> clickEvent;
+        int slot;
 
-        public Item(ItemStack item) {
-            this.item = item;
+        public Item(ItemStack stack) {
+            this.stack = stack;
         }
 
-        public Item(FluidItem item) {
-            this.item = item.build();
+        public Item slot(int slot) {
+            this.slot = slot;
+            return this;
         }
 
-        public Item(Material material) {
-            this.item = new ItemStack(material);
+        public Item onClick(BiConsumer<ClickEvent, Item> clickEvent) {
+            this.clickEvent = clickEvent;
+            return this;
         }
 
-        public Item(Material material, int amount) {
-            this.item = new ItemStack(material, amount);
+        public FluidGUI getGUI() {
+            return gui;
         }
 
-        public void onClick() { };
+        public static class ClickEvent {
+            Player clicker;
+            ClickType clickType;
+            InventoryType.SlotType slotType;
+            InventoryAction action;
 
-        public ItemStack getItem() {
-            return item;
-        }
+            ClickEvent(Player clicker, ClickType clickType, InventoryType.SlotType slotType, InventoryAction action) {
+                this.clicker = clicker;
+                this.clickType = clickType;
+                this.slotType = slotType;
+                this.action = action;
+            }
 
-        public ClickType getClickType() {
-            return clickType;
-        }
+            public Player getClicker() {
+                return clicker;
+            }
 
-        public boolean isShiftClick() {
-            return shiftClick;
-        }
+            public ClickType getClickType() {
+                return clickType;
+            }
 
-        public Player getClicker() {
-            return clicker;
-        }
+            public InventoryType.SlotType getSlotType() {
+                return slotType;
+            }
 
-        private void internalClick() {
-            if (gui.canTakeItems) {
-                gui.items.remove(slot);
+            public InventoryAction getAction() {
+                return action;
             }
         }
-
     }
 }

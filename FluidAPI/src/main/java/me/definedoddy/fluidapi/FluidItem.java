@@ -273,6 +273,10 @@ public class FluidItem {
         return this;
     }
 
+    public boolean isNull() {
+        return FluidItem.isNull(item);
+    }
+
     public static ItemStack setMeta(ItemStack item, String displayName, String... lore) {
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(FluidMessage.toColor(displayName));
@@ -424,6 +428,11 @@ public class FluidItem {
 
     public static ItemStack addEnchantGlow(ItemStack item) {
         return FluidItem.EnchantGlow.addToItem(item);
+    }
+
+
+    public static boolean isNull(ItemStack item) {
+        return item == null || item.getType() == Material.AIR;
     }
 
     private static class EnchantGlow extends Enchantment {
