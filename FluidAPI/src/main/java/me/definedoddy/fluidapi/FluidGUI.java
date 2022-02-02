@@ -127,6 +127,7 @@ public class FluidGUI {
                         if (closeEvent != null) {
                             closeEvent.accept(e);
                         }
+                        listener = null;
                         unregister();
                     }
                 }
