@@ -72,6 +72,10 @@ public class FluidGUI {
         }
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     void initListeners() {
         listener = new FluidListener() {
             @EventHandler
